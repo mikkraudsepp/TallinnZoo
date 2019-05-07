@@ -1,0 +1,28 @@
+﻿@model WebApp.ViewModels.FeedbackPostModel
+
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+<div class="feedback-page page" id="feedback-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <h4 class="heading heading-line mt-4">
+                    Give feedback
+                </h4>
+                <form asp-action="SendFeedback" method="post" class="mt-4">
+                    <p>
+                        This web application is brand new. We'd like to improve it. That's why every feedback is valuable to us. Thank you for taking the time to help us.
+                    </p>
+                    <div class="form-group">
+                        <label class="font-weight-semibold mb-1" asp-for="Description">Feedback</label>
+                        <textarea class="form-control" placeholder="" rows=5 asp-for="Description" minlength="10"></textarea>
+                        <span asp-validation-for="Description" class="invalid-feedback"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-5">Send feedback<i class="far fa-paper-plane ml-3"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

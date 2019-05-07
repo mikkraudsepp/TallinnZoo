@@ -1,0 +1,26 @@
+@model WebApp.Areas.Admin.ViewModels.Animal.AnimalPostModel
+
+@{
+    ViewData["Title"] = "Add animal";
+}
+
+
+<div class="add-animal-page page" id="add-animal-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <h4 class="heading heading-line mt-4">
+                    Add animal
+                </h4>
+                <form asp-action="AddAnimal" method="post" class="mt-4">
+                    <div class="form-group">
+                        <label class="font-weight-semibold mb-1" asp-for="Name">Name</label>
+                        <input class="form-control" placeholder="" asp-for="Name" minlength="2"/>
+                        <span asp-validation-for="Name" class="invalid-feedback"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-5">Add animal<i class="far fa-paper-plane ml-3"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

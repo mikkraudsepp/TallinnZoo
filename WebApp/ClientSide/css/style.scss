@@ -1,0 +1,490 @@
+﻿@import "_colors";
+@import "~bootstrap/scss/bootstrap";
+@import "admin";
+@import "enduser";
+
+.brown {
+    color: $color-brown;
+}
+
+.brown-dark {
+    color: $color-brown-dark;
+}
+
+.red-light {
+    color: $color-red-light;
+}
+
+.red {
+    color: $color-red;
+}
+
+.green {
+    color: $color-green;
+}
+
+.gray {
+    color: $color-gray;
+}
+
+.gray-light {
+    color: $color-gray-light;
+}
+
+.gray-dark {
+    color: $gray-600;
+}
+
+.gray-400 {
+    color: $gray-400;
+}
+
+.white {
+    color: $white;
+}
+
+.black {
+    color: $color-black;
+}
+
+.color-success {
+    color: $color-success;
+}
+
+.color-danger {
+    color: $color-danger;
+}
+
+.bg-brown-light {
+    background-color: $color-brown-light;
+}
+
+.bg-gray-light {
+    background: $color-gray-light;
+}
+
+.bg-gray {
+    background-color: $gray-300;
+}
+
+.bg-gray-200 {
+    background: $gray-200;
+}
+
+.bg-gray-300 {
+    background: $gray-300;
+}
+
+.bg-green {
+    background-color: $color-green;
+}
+
+.bg-red {
+    background-color: $color-red;
+}
+
+.bg-white {
+    background-color: $white;
+}
+
+.bg-black {
+    background-color: $black;
+}
+
+.bg-none {
+    background: none !important;
+}
+
+
+/*********** FONT SIZE **********/
+
+.font-size-0-625 {
+    font-size: 0.625rem;
+}
+
+.font-size-0-75 {
+    font-size: 0.75rem;
+}
+
+.font-size-0-875 {
+    font-size: 0.875rem;
+}
+
+.font-size-1 {
+    font-size: 1rem;
+}
+
+.font-size-1-125 {
+    font-size: 1.125rem;
+}
+
+.font-size-1-25 {
+    font-size: 1.25rem; //20px
+}
+
+.font-size-1-375 {
+    font-size: 1.375rem;
+}
+
+.font-size-1-5 {
+    font-size: 1.5rem; //24px
+}
+
+.font-size-1-75 {
+    font-size: 1.75rem;
+}
+
+.font-size-1-875 {
+    font-size: 1.875rem;
+}
+
+.font-size-2 {
+    font-size: 2rem;
+}
+
+.font-size-2-1875 {
+    font-size: 2.1875rem;
+}
+
+.font-size-2-5 {
+    font-size: 2.5rem;
+}
+
+.font-size-2-8125 {
+    font-size: 2.8125rem;
+}
+
+.font-size-3 {
+    font-size: 3rem;
+}
+
+.font-size-3-25 {
+    font-size: 3.25rem;
+}
+
+.font-size-3-5 {
+    font-size: 3.5rem;
+}
+
+.font-weight-semibold {
+    font-weight: 600;
+}
+
+.font-weight-medium {
+    font-weight: 500;
+}
+
+.line-height-1-625 {
+    line-height: 1.625rem;
+}
+
+.line-height-1-875 {
+    line-height: 1.875rem;
+}
+
+.line-height-2 {
+    line-height: 2rem;
+}
+
+.line-height-2-375 {
+    line-height: 2.375rem; //38px
+}
+
+
+/*********** MAIN ELEMENTS **********/
+
+[v-cloak] {
+    display: none
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.page {
+    min-height: 94vh;
+}
+
+.page-top-padding {
+    padding-top: 2.625rem;
+}
+
+.custom-radio label[for],
+.custom-checkbox label[for] {
+    cursor: pointer;
+}
+
+
+/*********** OVERALL ELEMENTS **********/
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.btn-wide {
+    min-width: 15.625rem
+}
+
+.overflow-ellips {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}
+
+
+/*********** GRID **********/
+
+.container-max {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include media-breakpoint-up(xl) {
+        max-width: (map-get($container-max-widths, "xl") - $grid-gutter-width);
+        width: (map-get($container-max-widths, "xl") - $grid-gutter-width);
+    }
+}
+
+.col-sidemenu {
+    padding-bottom: 2rem;
+    @include make-col-ready();
+
+    @include media-breakpoint-up(lg) {
+        @include make-col(3);
+    }
+}
+
+.col-content {
+    @include make-col-ready();
+    min-height: 85vh;
+    padding-bottom: 5rem;
+    margin-top: 3rem;
+
+    @include media-breakpoint-up(lg) {
+        @include make-col(9);
+        padding-left: 5rem;
+    }
+
+    @include media-breakpoint-down(md) {
+        margin-top: 4rem;
+    }
+}
+
+
+/*********** HEADINGS **********/
+
+.heading {
+    letter-spacing: 2px;
+}
+
+.section-heading {
+    font-weight: $font-weight-bold;
+    margin-bottom: 1.25rem;
+}
+
+
+/*********** CARDS **********/
+
+.card-white {
+    background: $white;
+    border: 1px solid $gray-400;
+}
+
+.list-card {
+    padding: 1rem 2rem;
+}
+
+.card-white-round {
+    background: $white;
+    border: 1px solid $gray-200;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.card-padding {
+    padding: 1.25rem;
+}
+
+a.card-white:hover {
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.10);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.10);
+}
+
+
+/*********** INPUTS **********/
+
+.input--white {
+    display: flex;
+
+    input {
+        padding: 0.5rem 1rem;
+        background: $white;
+        border: 1px solid $color-gray-light;
+    }
+
+    i {
+        margin-left: -30px;
+        margin-top: 12px;
+        color: $color-gray-light;
+    }
+}
+
+
+/*********** LABELS **********/
+
+.input-label {
+    font-size: 0.875rem;
+    font-weight: $font-weight-bold;
+}
+
+.label-group {
+    font-size: 0.875rem;
+
+    .label {
+        font-weight: $font-weight-bold;
+    }
+}
+
+
+/*********** RADIUS **********/
+
+.radius-5 {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.radius-10 {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.radius-15 {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+
+/*********** DIVIDERS **********/
+
+.divider-black {
+    border-bottom: 1px solid $color-black;
+}
+
+.divider-white {
+    border-bottom: 1px solid $white;
+}
+
+.divider-gray-light {
+    border-bottom: 1px solid $gray-200;
+}
+
+.divider-brown {
+    border-bottom: 1px solid $color-brown;
+}
+
+.divider-brown-light {
+    border-bottom: 1px solid $color-brown-light;
+}
+
+.heading-divider {
+    border-bottom: 1px solid $color-brown;
+}
+
+
+/*********** BORDERS **********/
+
+.border-bottom-red-2 {
+    border-bottom: solid 2px $color-red !important;
+}
+
+.border-bottom-brown-dark {
+    border-bottom: solid 1px $color-brown-dark !important;
+}
+
+
+/*********** SHADOWS **********/
+
+.shadow-1 {
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.10);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.10);
+}
+
+
+/*********** BUTTONS **********/
+
+.btn-action {
+    font-size: 0.875rem;
+    font-weight: $font-weight-medium;
+}
+
+/*********** IMAGES **********/
+
+.round-img--sm {
+    height: 42px;
+    border-radius: 50%;
+}
+
+
+/*********** TOPMENU **********/
+
+.navbar-app {
+    padding: 0.5rem 0rem;
+
+    .navbar-brand-logo {
+        height: 41px;
+    }
+
+    .navbar {
+        padding: 0.5rem 0;
+    }
+}
+
+
+/*********** FOOTER **********/
+
+.footer {
+
+}
+
+
+/*********** NAVS **********/
+
+.nav-tabs {
+    .nav-link {
+        border: none;
+        border-bottom: 2px solid rgba(255, 255, 255, 0);;
+
+        &.active {
+            background: none;
+            border-bottom: 2px solid $color-brown-dark;
+        }
+    }
+}
+
+/*********** ICONS **********/
+
+.menu-item-ico {
+    text-align: center;
+
+    .ico-border {
+        -webkit-text-fill-color: rgba(0, 0, 0, 0); /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: $color-black;
+        position: absolute;
+        margin-top: -2px;
+        margin-left: -1px;
+    }
+
+    i {
+        font-size: 1.3rem;
+        width: 100%;
+        max-width: 1.5rem;
+        color: $color-brown-dark;
+    }
+}

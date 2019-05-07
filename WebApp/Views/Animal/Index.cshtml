@@ -1,0 +1,44 @@
+﻿@using Domain.Animals
+@using Newtonsoft.Json
+@model WebApp.ViewModels.Animal.IndexModel
+
+@{
+ViewData["Title"] = "Animals";
+}
+
+<script id="animalList" type="application/json">
+    @Html.Raw(JsonConvert.SerializeObject(Model.Animals))
+</script>
+
+<main class="bg-brown-light animals-page page" id="animals-page" v-cloak>
+    <div class="container-fluid">
+        <div class="container-max">
+            <div class="row">
+                <div class="col">
+                    <div class="input--white my-4">
+                        <input type="text" name="name" value="" placeholder="Otsi" autocomplete="off"
+                        class="searchbox form-control"
+                        v-model="searchInput"/>
+                        <i class="fas fa-search"></i>
+                    </div>
+
+                    <div class="animal-list bg-white">
+                        <a v-bind:href="'Animal/Details/'+ animal.Id" v-for="animal in filteredAnimals" class="row no-gutters animal-list-item">
+                            <div class="col-auto">
+                                <img v-bind:src="animal.Image.Url" v-bind:alt="animal.Image.Name" class="animal-list-img">
+                            </div>
+                            <div class="col">
+                                {{ animal.Name }}
+                            </div>
+                            <div class="col-auto text-center">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="/js/Animal/index-animals.js"></script>

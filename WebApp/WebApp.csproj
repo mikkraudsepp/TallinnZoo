@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <UserSecretsId>aspnet-WebApp-E2219910-B3E5-4E2A-B380-0B1C724EF246</UserSecretsId>
+        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Areas\Admin\ViewModels\Animal\AnimalCreateEditViewModel.cs~RFf8b455.TMP" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.2" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Areas\Admin\Views\Media" />
+      <Folder Include="Data" />
+      <Folder Include="wwwroot\media\brand" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BLL.App\BLL.App.csproj" />
+      <ProjectReference Include="..\Contracts.BLL.App\Contracts.BLL.App.csproj" />
+      <ProjectReference Include="..\DAL.App.EF\DAL.App.EF.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Media\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Media\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Media\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Media\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Media\Index.cshtml" />
+    </ItemGroup>
+
+</Project>

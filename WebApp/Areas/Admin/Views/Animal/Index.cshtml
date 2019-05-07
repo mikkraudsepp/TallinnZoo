@@ -1,0 +1,48 @@
+@model WebApp.Areas.Admin.ViewModels.Animal.IndexModel
+
+@{
+ViewData["Title"] = "Animals";
+}
+
+<div class="animals-page page" id="animals-page">
+    <div class="row">
+        <div class="col-lg-8">
+            <h5 class="heading">
+                Loomad
+            </h5>
+        </div>
+        <div class="col-lg-4 text-left text-lg-right">
+            <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
+                Lisa loom
+                <i class="fas fa-plus color-success ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="heading-divider"></div>
+
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="input--white my-4">
+                <input type="text" name="name" value="" placeholder="Otsi" autocomplete="off"
+                    class="searchbox form-control" />
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <div class="animal-list">
+        @foreach (var animal in Model.Animals)
+        {
+            <div class="bg-white border-bottom-brown-dark">
+                <a asp-action="Details" asp-route-id="@animal.Id" class="row no-gutters list-card">
+                    <div class="col-11">
+                        @animal.Name
+                    </div>
+                    <div class="col-1 text-center">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,45 @@
+
+
+
+/*********** SIDEMENU **********/
+
+.sidemenu {
+    padding-top: 5rem;
+
+    .menu-item {
+
+        a {
+            font-weight: $font-weight-bold;
+            padding: 1rem 1rem;
+            margin: 0.2rem 0;
+            display: flex;
+
+            &:hover {
+                text-decoration: none;
+                background: $color-brown-light;
+            }
+
+            .menu-item-ico {
+                margin-right: 2rem;
+                margin-top: 0.2rem;
+                width: 1.5rem;
+                text-align: center;
+
+                i {
+                    font-size: 1.3rem;
+                    max-width: 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+.animal-details-page {
+
+    .animal-description {
+
+    }
+
+
+
+}

@@ -1,0 +1,98 @@
+﻿@using Domain.Animals
+@model WebApp.ViewModels.Animal.AnimalModel
+
+@{
+ViewData["Title"] = "Animals";
+}
+
+@{Layout="~/Views/Shared/_LayoutBottomNav.cshtml";}
+
+<div class="animal-details-page page bg-brown-light pb-5" id="animal-details-page">
+    <div class="container-max">
+        <section class="">
+            <div class="">
+                <a href="javascript:history.back()" class="btn-back"><i class="fas fa-arrow-left"></i></a>
+                @if (@Model.FeaturedImage != null)
+                {
+                <img src="/@Model.FeaturedImage.Url" alt="@Model.FeaturedImage.Name" class="featured-img" />
+                }
+            </div>
+        </section>
+    </div>
+    <div class="container-fluid">
+        <div class="container-max">
+            <section class="row justify-content-center">
+                <div class="col-lg-6 col-11">
+                    <div class="card-animal-info">
+                        <h3>
+                            @Model.Name
+                        </h3>
+                        <div class="gray">@Model.BinomialName</div>
+                    </div>
+                </div>
+                <div class="col-12 mt-5">
+                    <ul class="nav nav-tabs nav-fill justify-content-center w-100 mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-medium active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                                aria-controls="pills-home" aria-selected="true">Heliklipid</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-medium" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                                aria-controls="pills-profile" aria-selected="false">Kirjeldus</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-3" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <section class="animal-soundtracks">
+                                @foreach (var soundTrack in @Model.AnimalSoundTracks)
+                                {
+                                <div class="animal-soundtrack mb-3">
+                                    <div class="font-weight-medium">
+                                        @soundTrack.Name
+                                    </div>
+                                    <div>
+                                        
+                                    </div>
+                                    <audio controls>
+                                        <source src="/@soundTrack.Url" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
+                                }
+                            </section>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <section class="animal-facts">
+                                <h4>Kas teadsid?</h4>
+                                @foreach (var fact in @Model.Facts)
+                                {
+                                <div class="mb-3">
+                                    <div class="font-weight-medium">
+                                        @fact.Label
+                                    </div>
+                                    <div>
+                                        @fact.Description
+                                    </div>
+                                </div>
+                                }
+                            </section>
+                            <section class="animal-description">
+                                @Model.Description
+                            </section>
+                            <h2 class="mt-4">Pildid</h2>
+                            @foreach (var media in @Model.AnimalPictures)
+                            {
+                            <div>
+                                @media.Name
+                            </div>
+                            <img style="height: 200px" src="/@media.Url" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script src="/js/Animal/details.js?rndstr=<%= getRandomStr() %>"></script>

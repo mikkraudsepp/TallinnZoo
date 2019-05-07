@@ -1,0 +1,48 @@
+﻿@{
+ViewData["Title"] = "Stats";
+}
+
+<div class="tracking-stats-page page bg-brown-light" id="tracking-stats-page">
+
+    <div class="container">
+        <div class="row justify-content-center py-4">
+            <div class="col-lg-3">
+                <span class="font-weight-medium">Keskmine:</span> {{ meanDistance }}
+            </div>
+            <div class="col-lg-3">
+                <div>
+                    <span class="font-weight-medium">Punktide arv:</span> {{ animalList.length }}
+                </div>
+                <div>
+                    <span class="font-weight-medium">Aega jäänud:</span> {{ message2 }}
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                <button class="btn btn-primary btn-block" v-on:click="runForTime">
+                    Start watch
+                </button>
+            </div>
+            <div class="col-lg-3 mt-3 mt-lg-0">
+                <div class="btn btn-primary btn-block" v-on:click="stopLocationWatch">
+                    Close watch
+                </div>
+            </div>
+        </div>
+        <section class="row justify-content-center mt-4">
+
+            <div class="animal-list bg-white">
+                <div v-for="animal in animalList" class="row no-gutters animal-list-item">
+                    <div class="col">
+                        <div>
+                            {{ animal.distance }} <span class="ml-2">m</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="/js/Animal/tracking-stats.js?rndstr=<%= getRandomStr() %>"></script>

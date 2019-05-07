@@ -1,0 +1,60 @@
+﻿@using Domain.Animals
+@using Newtonsoft.Json
+@model WebApp.ViewModels.Animal.TrackAnimalModel
+
+@{
+ViewData["Title"] = "Track location";
+}
+
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+<script id="animalList" type="application/json">
+    @Html.Raw(JsonConvert.SerializeObject(Model.Animals))
+</script>
+
+<main class="bg-brown-light track-animals-page page" id="track-animals-page" v-cloak>
+    <div class="container-fluid">
+        <div class="container-max">
+            <div class="row">
+                <div class="col">
+                    <div class="my-4">
+                        <div>Arvutustsükleid: {{calculationCycles}}</div>
+                        <div>Arvutuseks kulus: {{elapsedTime}} ms</div>
+                        <div>User lat: {{ userCurrentLocation.lat }}</div>
+                        <div>User lng: {{ userCurrentLocation.lng }}</div>
+                        <div><span class="font-weight-bold">Distance from desk:</span> {{ distance }} <span class="mr-2">m</span>
+
+                        </div>
+                        <div class="btn btn-primary" v-on:click="getGoogleDistance()">
+                            Get google distance
+                        </div>
+                        <div class="btn btn-primary" v-on:click="getLocalDistance()">
+                            Get local distance
+                        </div>
+                    </div>
+
+                    <div class="animal-list bg-white">
+                        <a v-bind:href="'Details/'+ animal.Id" v-for="animal in animalList" class="row no-gutters animal-list-item">
+                            <div class="col-auto">
+                                <img v-bind:src="'/' + animal.Image.Url" v-bind:alt="animal.Image.Name" class="animal-list-img">
+                            </div>
+                            <div class="col">
+                                <div>
+                                    {{ animal.DistanceFromUser }} <span class="ml-2">m</span>
+                                </div>
+                                <div>
+                                    {{ animal.Name }}
+                                </div>
+                            </div>
+                            <div class="col-auto text-center align-item">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="/js/Animal/track-animals.js?rndstr=<%= getRandomStr() %>"></script>

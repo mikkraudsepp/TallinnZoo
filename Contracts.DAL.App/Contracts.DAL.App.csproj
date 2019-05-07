@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Contracts.DAL.App</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Repositories\IFeedbackRepository.cs~RF185f18f.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts.DAL.Base\Contracts.DAL.Base.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>
