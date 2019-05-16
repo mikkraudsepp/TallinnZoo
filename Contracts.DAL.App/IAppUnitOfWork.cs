@@ -10,6 +10,7 @@ namespace Contracts.DAL.App
         IConservationStatusRepository ConservationStatuses { get; }
         IAppMapRepository AppMaps { get; }
         IMapSegmentRepository MapSegments { get; }
+        IGeoCoordinateRepository GeoCoordinates { get; }
         IMediaRepository Medias { get; }
         IMediaInAnimalRepository MediaInAnimals { get; }
         ISoundTrackRepository SoundTracks { get; }

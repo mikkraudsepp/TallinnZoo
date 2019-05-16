@@ -19,6 +19,7 @@ namespace BLL.App.Helpers
             AddCreationMethod<IConservationStatusService>(uow => new ConservationStatusService(uow));
             AddCreationMethod<IAppMapService>(uow => new AppMapService(uow));
             AddCreationMethod<IMapSegmentService>(uow => new MapSegmentService(uow));
+            AddCreationMethod<IGeoCoordinateService>(uow => new GeoCoordinateService(uow));
             AddCreationMethod<IMediaService>(uow => new MediaService(uow));
             AddCreationMethod<ISoundTrackService>(uow => new SoundTrackService(uow));
             AddCreationMethod<IMediaInAnimalService>(uow => new MediaInAnimalService(uow));

@@ -28,6 +28,9 @@ namespace DAL.App.EF
         public IMapSegmentRepository MapSegments =>
             _repositoryProvider.GetRepository<IMapSegmentRepository>();
         
+        public IGeoCoordinateRepository GeoCoordinates =>
+            _repositoryProvider.GetRepository<IGeoCoordinateRepository>();
+        
         public IMediaRepository Medias =>
             _repositoryProvider.GetRepository<IMediaRepository>();
         

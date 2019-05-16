@@ -1,0 +1,8 @@
+﻿@using Domain.Map
+@model WebApp.Areas.Admin.ViewModels.Animal.AnimalModel
+
+
+<div>
+    <label asp-for="MapSegment.Id" class="input-label mt-4">Kaardid</label>
+    <select asp-for="MapSegment.Id" asp-items="Model.MapSegmentsSelectListItems" class="custom-select"></select>
+</div>

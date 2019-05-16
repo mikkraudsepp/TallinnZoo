@@ -26,6 +26,9 @@ namespace DAL.App.EF.Helpers
 
             RepositoryCreationMethods.Add(typeof(IMapSegmentRepository),
                 dataContext => new MapSegmentRepository(dataContext));
+            
+            RepositoryCreationMethods.Add(typeof(IGeoCoordinateRepository),
+                dataContext => new GeoCoordinateRepository(dataContext));
 
             RepositoryCreationMethods.Add(typeof(IMediaRepository),
                 dataContext => new MediaRepository(dataContext));

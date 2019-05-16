@@ -26,6 +26,7 @@ namespace DAL.App.EF
         public DbSet<AnimalFact> AnimalFact { get; set; }
         public DbSet<AppMap> AppMap { get; set; }
         public DbSet<MapSegment> MapSegment { get; set; }
+        public DbSet<GeoCoordinate> GeoCoordinate { get; set; }
         public DbSet<AppUser> AppUser { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Media> Media { get; set; }
@@ -649,64 +650,110 @@ namespace DAL.App.EF
 //            };
             
 //Test 2
-            var mapSegmenent1 = new MapSegment()
+
+            
+            var mapSegment1 = new MapSegment()
             {
                 Id = Guid.NewGuid(),
                 Name = "Hallhülge bassein",
-                Latitude = 59.4516253,
-                Longitude = 24.717528,
                 AnimalId = graySeal.Id,
                 AppMapId = appMap.Id
             };
             
-            var mapSegmenent2 = new MapSegment()
+            var geoCoordinate1 = new GeoCoordinate()
+            {
+                Id = Guid.NewGuid(),
+                Latitude = 59.4516253,
+                Longitude = 24.717528,
+                Created = DateTime.Now,
+                MapSegmentId = mapSegment1.Id
+            };
+            
+            var mapSegment2 = new MapSegment()
             {
                 Id = Guid.NewGuid(),
                 Name = "Ahvipuur - Jaapani Makaak",
-                Latitude = 59.4515693,
-                Longitude = 24.7177412,
                 AnimalId = japaneseMacaque.Id,
                 AppMapId = appMap.Id
             };
             
-            var mapSegmenent3 = new MapSegment()
+            var geoCoordinate2 = new GeoCoordinate()
+            {
+                Id = Guid.NewGuid(),
+                Latitude = 59.4515693,
+                Longitude = 24.7177412,
+                Created = DateTime.Now,
+                MapSegmentId = mapSegment2.Id
+            };
+            
+            var mapSegment3 = new MapSegment()
             {
                 Id = Guid.NewGuid(),
                 Name = "Lõvipuur",
-                Latitude = 59.4514493,
-                Longitude = 24.7175749,
                 AnimalId = lion.Id,
                 AppMapId = appMap.Id
             };
             
-            var mapSegmenent4 = new MapSegment()
+            var geoCoordinate3 = new GeoCoordinate()
+            {
+                Id = Guid.NewGuid(),
+                Latitude = 59.4514493,
+                Longitude = 24.7175749,
+                Created = DateTime.Now,
+                MapSegmentId = mapSegment3.Id
+            };
+            
+            var mapSegment4 = new MapSegment()
             {
                 Id = Guid.NewGuid(),
                 Name = "Šimpansite aed",
-                Latitude = 59.4514699,
-                Longitude = 24.7172511,
                 AnimalId = chimpanzee.Id,
                 AppMapId = appMap.Id
             };
             
-            var mapSegmenent5 = new MapSegment()
+            var geoCoordinate4 = new GeoCoordinate()
+            {
+                Id = Guid.NewGuid(),
+                Latitude = 59.4514699,
+                Longitude = 24.7172511,
+                Created = DateTime.Now,
+                MapSegmentId = mapSegment4.Id
+            };
+            
+            var mapSegment5 = new MapSegment()
             {
                 Id = Guid.NewGuid(),
                 Name = "Tüügassea aedik",
-                Latitude = 59.4515674,
-                Longitude = 24.7173722,
                 AnimalId = warhog.Id,
                 AppMapId = appMap.Id
             };
             
+            var geoCoordinate5 = new GeoCoordinate()
+            {
+                Id = Guid.NewGuid(),
+                Latitude = 59.4515674,
+                Longitude = 24.7173722,
+                Created = DateTime.Now,
+                MapSegmentId = mapSegment5.Id
+            };
+            
+            modelBuilder.Entity<GeoCoordinate>()
+                .HasData(
+                    geoCoordinate1,
+                    geoCoordinate2,
+                    geoCoordinate3,
+                    geoCoordinate4,
+                    geoCoordinate5
+                );
+            
             
             modelBuilder.Entity<MapSegment>()
                 .HasData(
-                    mapSegmenent1,
-                    mapSegmenent2,
-                    mapSegmenent3,
-                    mapSegmenent4,
-                    mapSegmenent5
+                    mapSegment1,
+                    mapSegment2,
+                    mapSegment3,
+                    mapSegment4,
+                    mapSegment5
                 );
 
             

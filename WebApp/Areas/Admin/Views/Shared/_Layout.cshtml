@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="/dist/main.css" asp-append-version="true" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
@@ -68,12 +69,12 @@
                                 </a>
                             </div>
                             <div class="menu-item">
-                                <a href="">
+                                <a asp-area="Admin" asp-controller="Map" asp-action="MapSegments">
                                     <div class="menu-item-ico">
                                         <i class="fas fa-map-marker-alt ico-border"></i>
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
-                                    Kaart
+                                    Asukohad kaardil
                                 </a>
                             </div>
                             <div class="menu-item">

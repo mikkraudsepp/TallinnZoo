@@ -331,10 +331,8 @@ namespace DAL.App.EF.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Longitude = table.Column<double>(nullable: false),
-                    Latitude = table.Column<double>(nullable: false),
-                    AppMapId = table.Column<Guid>(nullable: false),
-                    AnimalId = table.Column<Guid>(nullable: false)
+                    AppMapId = table.Column<Guid>(nullable: true),
+                    AnimalId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -344,13 +342,13 @@ namespace DAL.App.EF.Migrations
                         column: x => x.AnimalId,
                         principalTable: "Animal",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MapSegment_AppMap_AppMapId",
                         column: x => x.AppMapId,
                         principalTable: "AppMap",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -432,23 +430,44 @@ namespace DAL.App.EF.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "GeoCoordinate",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
+                    Latitude = table.Column<double>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    MapSegmentId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeoCoordinate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeoCoordinate_MapSegment_MapSegmentId",
+                        column: x => x.MapSegmentId,
+                        principalTable: "MapSegment",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AppMap",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("1fefc037-df28-4bfe-9f65-65918be312ed"), "Tallinna loomaaia kaart" });
+                values: new object[] { new Guid("4fd691de-e726-42ae-8831-ded116db2e1e"), "Tallinna loomaaia kaart" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("cc0e99f5-1b03-424d-bddc-442c361f6fa3"), "2f22a1f7-05e9-401a-bf98-15270b9204f2", "Admin", "Admin" });
+                values: new object[] { new Guid("dbedacf4-8c03-440b-a3dc-076fd7a779c9"), "0e65e318-4efb-41f2-ac85-9ce3d5228d7b", "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "WorkPosition" },
                 values: new object[,]
                 {
-                    { new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), 0, "b0335a25-326a-4292-8fb7-376cfdc2fc15", "mikkraudsepp@hotmail.com", false, "Mikk", "Raudsepp", false, null, null, null, null, null, false, null, false, null, null },
-                    { new Guid("a226d610-1108-408d-ba66-77c69c760466"), 0, "f4c27799-185f-4452-af93-5399be3e2425", "themikkraudsepp@gmail.com", false, "Admin", "Admin", false, null, null, null, null, null, false, null, false, null, null }
+                    { new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), 0, "d790468e-67cd-4306-8308-5b8d1c394105", "mikkraudsepp@hotmail.com", false, "Mikk", "Raudsepp", false, null, null, null, null, null, false, null, false, null, null },
+                    { new Guid("bbd5a089-fa55-45e9-89ba-aa81589d56cb"), 0, "16b6038b-5a11-4179-96b5-2c964b8ed88d", "themikkraudsepp@gmail.com", false, "Admin", "Admin", false, null, null, null, null, null, false, null, false, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -456,37 +475,37 @@ namespace DAL.App.EF.Migrations
                 columns: new[] { "Id", "Abbreviation", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("46470634-c4af-42b9-8eec-8c117a557f50"), "EX", "Extinct" },
-                    { new Guid("5e4737fc-82fb-47b5-8337-b6f595ba080e"), "EW", "Extinct in the wild" },
-                    { new Guid("613315a8-b6f5-49ec-9583-7d33492e7be3"), "CR", "Critically endangered" },
-                    { new Guid("a5ecde65-5848-404a-a6ef-d42bfe4e97dc"), "EN", "Endangered" },
-                    { new Guid("a2679cb7-2f56-4913-99cc-4e5d97d3bb38"), "VU", "Vulnerable" },
-                    { new Guid("09492d41-c971-443d-8717-a360b38ccb81"), "NT", "Near threatened" },
-                    { new Guid("58b8818d-f4d3-4d39-8906-88b79080fd92"), "LC", "Least concern" },
-                    { new Guid("74f3d6f7-4f14-42c9-bdeb-1fcb77890a02"), "DD", "Data deficient" },
-                    { new Guid("ae5e6d70-4365-448c-8edc-4474562e2ff1"), "NE", "Not evaluated" }
+                    { new Guid("8f12e90a-78c1-4b72-a027-c267d259b48f"), "EX", "Extinct" },
+                    { new Guid("65df37b0-99de-4cc2-94c1-b0e739918c78"), "EW", "Extinct in the wild" },
+                    { new Guid("ba3c48c2-2464-470a-9e6b-762a7dd6d3cf"), "CR", "Critically endangered" },
+                    { new Guid("f794ed3b-e145-48e6-a16e-b21d9b62037c"), "EN", "Endangered" },
+                    { new Guid("922b93a0-f05d-4b82-a4bf-5980d2b1b58a"), "VU", "Vulnerable" },
+                    { new Guid("8c30cfca-2365-46f7-b97c-c96ca29b24fd"), "NT", "Near threatened" },
+                    { new Guid("78202fb8-b51e-4177-9f68-acb9d3cf6c3d"), "LC", "Least concern" },
+                    { new Guid("5be82bdd-cec5-437d-b7d4-c591f1cb4eaf"), "DD", "Data deficient" },
+                    { new Guid("3977b2d0-8dba-404b-9e78-52246e026881"), "NE", "Not evaluated" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Feedback",
                 columns: new[] { "Id", "DateCreated", "Description", "SenderEmail" },
-                values: new object[] { new Guid("cfc4ec24-6069-4189-9e0c-482849e3fcad"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is a test feedback", "bob.test@email.com" });
+                values: new object[] { new Guid("f7e2edad-0d7a-478e-9fb6-e15e5c9f54d9"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is a test feedback", "bob.test@email.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), new Guid("cc0e99f5-1b03-424d-bddc-442c361f6fa3") });
+                values: new object[] { new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), new Guid("dbedacf4-8c03-440b-a3dc-076fd7a779c9") });
 
             migrationBuilder.InsertData(
                 table: "Media",
                 columns: new[] { "Id", "FileType", "Name", "UploadedDateTime", "UploaderUserId", "Url" },
                 values: new object[,]
                 {
-                    { new Guid("e0d6dbe3-2fac-45a7-b672-b55e63bb8c45"), "image", "Seal", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/image/seal-avatar.jpg" },
-                    { new Guid("7d0f2cfb-0c8e-4c00-afe0-28b1ed5a9de1"), "image", "Lion", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/image/lion-avatar.jpg" },
-                    { new Guid("9a522da8-aef2-4647-bddd-a88153c1738b"), "image", "Japanese macaque", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/image/japanese-macaque-avatar.jpg" },
-                    { new Guid("86d1c8bd-f68b-4f9f-84bc-19447bf78c71"), "image", "Warhog", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/image/warhog-avatar-1.jpg" },
-                    { new Guid("f249d2ba-5bb4-486d-b0da-c9c0acdac1e3"), "image", "Chimpanzee", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/image/chimpanzee-avatar-1.jpg" }
+                    { new Guid("c15a9527-ce53-4938-959f-91fba1f86037"), "image", "Seal", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/image/seal-avatar.jpg" },
+                    { new Guid("4abde759-cc78-409e-986e-8a9eb08bff7d"), "image", "Lion", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/image/lion-avatar.jpg" },
+                    { new Guid("4504700e-44c8-4741-87d6-3093a11b0f03"), "image", "Japanese macaque", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/image/japanese-macaque-avatar.jpg" },
+                    { new Guid("8c3f3234-142b-47e2-8db2-2b570e003953"), "image", "Warhog", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/image/warhog-avatar-1.jpg" },
+                    { new Guid("7eb5a7bf-a5c3-45b6-84f2-5e1bbfc90bde"), "image", "Chimpanzee", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/image/chimpanzee-avatar-1.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -494,14 +513,14 @@ namespace DAL.App.EF.Migrations
                 columns: new[] { "Id", "FileName", "FileType", "Name", "Reader", "TimesPlayed", "TrackLength", "UploadedDateTime", "UploaderUserId", "Url" },
                 values: new object[,]
                 {
-                    { new Guid("e167329f-4473-4267-9c5d-3027f01c57ce"), null, "mp3", "Seal facts", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7368), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/grayseal-1.mp3" },
-                    { new Guid("cdbfe51d-e9a1-493c-a611-fbfa1d76cbbb"), null, "mp3", "Lõvi kirjeldus", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7828), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/lion-1.mp3" },
-                    { new Guid("ae6e2c2c-1e7d-475b-beec-ffb53130757b"), null, "mp3", "Jaapani makaak 1", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7799), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/japanese-macaque-1.mp3" },
-                    { new Guid("022c10d3-1ef8-4606-810a-58dd51fe319b"), null, "mp3", "Jaapani makaak 2", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7812), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/japanese-macaque-2.mp3" },
-                    { new Guid("889e743b-3ab8-41a9-b7de-1bda37de9bd0"), null, "mp3", "Jaapani makaak 3", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7820), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/japanese-macaque-3.mp3" },
-                    { new Guid("67b00230-bbd0-40f5-998b-6b4e7b79f31e"), null, "mp3", "Jaapani makaak 4", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7824), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/japanese-macaque-4.mp3" },
-                    { new Guid("4c0154a4-10b5-43c6-ab4a-7b2d4acb638e"), null, "mp3", "Kuidas rääkida simpansiga", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7832), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/chimpanzee-1.mp3" },
-                    { new Guid("78829890-edbe-491b-a27d-900f5457606b"), null, "mp3", "Tüügassiga on imeline loom", null, 0, null, new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(7835), new Guid("10f58b68-f85b-4526-988e-5eb132aae5b9"), "media/audio/warhog-1.mp3" }
+                    { new Guid("278a22a3-580e-4b70-8b18-19a6f9d67a00"), null, "mp3", "Seal facts", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(6965), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/grayseal-1.mp3" },
+                    { new Guid("ca08cae5-d38c-4194-b850-bc1018268649"), null, "mp3", "Lõvi kirjeldus", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(7464), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/lion-1.mp3" },
+                    { new Guid("52d30bdc-fb30-40aa-9d6a-a81f7a0dd519"), null, "mp3", "Jaapani makaak 1", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(7434), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/japanese-macaque-1.mp3" },
+                    { new Guid("ead5bd8a-1535-4661-a477-d9efa39fab30"), null, "mp3", "Jaapani makaak 2", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(7452), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/japanese-macaque-2.mp3" },
+                    { new Guid("b758d1ae-3c48-4566-a47b-5a0f172c9739"), null, "mp3", "Jaapani makaak 3", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(7457), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/japanese-macaque-3.mp3" },
+                    { new Guid("8f909c41-a935-4691-97b4-e0d076151e0a"), null, "mp3", "Jaapani makaak 4", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(7461), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/japanese-macaque-4.mp3" },
+                    { new Guid("4643af16-75e5-47a7-8e22-07dfaec59350"), null, "mp3", "Kuidas rääkida šimpansiga", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(7468), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/chimpanzee-1.mp3" },
+                    { new Guid("c8481863-0e6c-4fda-b363-ac6d826a010d"), null, "mp3", "Tüügassiga on imeline loom", null, 0, null, new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(7471), new Guid("2fcdd784-1ff2-4e93-9380-36005a9f1328"), "media/audio/warhog-1.mp3" }
                 });
 
             migrationBuilder.InsertData(
@@ -509,11 +528,11 @@ namespace DAL.App.EF.Migrations
                 columns: new[] { "Id", "BinomialName", "ConservationStatusId", "Created", "Description", "FeaturedImgId", "LastEdited", "MapSegmentId", "Name", "ScientificClassificationId" },
                 values: new object[,]
                 {
-                    { new Guid("90de391c-a3dc-4aa1-9208-011ef4b6718e"), "Halichoerus grypus", new Guid("58b8818d-f4d3-4d39-8906-88b79080fd92"), new DateTime(2019, 5, 2, 17, 7, 7, 616, DateTimeKind.Local).AddTicks(6572), "Hallhüljes (Halichoerus grypus) on loivaliste (Pinnipedia) seltsi hülglaste (Phocidae) sugukonda kuuluv veeimetaja. Hallhüljes on Läänemere imetajatest suurim [1]. Ta on üks kolmest Eestis elavast hülglasest, omanimelise perekonna ainuliik.", new Guid("e0d6dbe3-2fac-45a7-b672-b55e63bb8c45"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Hallhüljes", null },
-                    { new Guid("3b233f62-c406-4850-bffa-fbb8809b74a8"), "Panthera leo", new Guid("a2679cb7-2f56-4913-99cc-4e5d97d3bb38"), new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(6423), "Lõvid on väga suured ja võimsa kehaehitusega. Isaste kehapikkus on 180–240 cm, saba pikkus 60–90 cm, mass 180–227 kg. Kere on sale, isegi kiitsakas. Pea on erakordselt massiivne, võrdlemisi pika koonuga. Jäsemed on lüheldased ja väga tugevad. Pikk saba lõpeb tutiga. Keha katab lühikene pruunikaskollane karvastik. Täiskasvanud isasloomal on pikk tumedam lakk, mis katab nii kaela, õlgu kui ka rinda.", new Guid("7d0f2cfb-0c8e-4c00-afe0-28b1ed5a9de1"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Lõvi", null },
-                    { new Guid("6c10d341-465a-4fc1-902e-d55f58d57a5a"), "Macaca fuscata", new Guid("58b8818d-f4d3-4d39-8906-88b79080fd92"), new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(6486), "Jässaka kehaehituse ja tiheda karvakasukaga jaapani makaagid on kõige põhjapoolsema levikuga ahvid. Talvekülmade eest otsivad kaitset kuumaveeallikates. Tegutsevad nii puudel kui maapinnal, ujuvad ja sukelduvad suurepäraselt. Söövad puuvilju, taimede lehti ja juuri, putukaid, limuseid jms, ka pisiimetajaid. Elavad gruppidena, mida juhib tugev isasloom ja kus on selgelt välja kujunenud alluvussuhted. Omavahelisel suhtlemisel on tähtsal kohal häälitsused, miimika ja žestid. Pojad sünnivad enamasti kevad-suvel. Järglaste eest hoolitseb sageli ka isane. Loomaaias on elanud kuni 35 aastat vanaks.", new Guid("9a522da8-aef2-4647-bddd-a88153c1738b"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Jaapani makaak", null },
-                    { new Guid("b493b31f-53ea-4ea3-8774-6c31fd5f5694"), "Phacochoerus africanus", new Guid("58b8818d-f4d3-4d39-8906-88b79080fd92"), new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(6513), "Asustavad savanne ja hõredaid põõsastikke, vältides tihedaid metsi. Elavad rühmades, kuhu kuulu-vad 1–3 emist koos põrsastega. Kuldid hoiavad eraldi. Tegutsevad päeval, veetes öö urus, kuhu täiskasvanud sisenevad tagurpidi, sulgedes uruava oma suure tüükalise peaga. Toituvad rohttaimedest, liikudes ringi poolroomates “põlvili”, esijäsemetel on randmeliigese kohal paksud mõhnad. Sigivad aasta läbi, kuigi enim poegi on vihmaperioodil. Jooksuajal teevad isased mootoripodinat meenutavat häält ja katsuvad rammu, surudes teineteist teelt, laubad vastamisi. Emane sünnitab urus 3–4 vöötideta põrsast.", new Guid("86d1c8bd-f68b-4f9f-84bc-19447bf78c71"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Tüügassiga", null },
-                    { new Guid("75436cc9-9a97-4d75-9037-e714f286d456"), "Pan troglodytes", new Guid("58b8818d-f4d3-4d39-8906-88b79080fd92"), new DateTime(2019, 5, 2, 17, 7, 7, 618, DateTimeKind.Local).AddTicks(6500), "Asustavad metsi, võsastikke ja kohati ka lagedamaid alasid. Tegutsevad nii puudel kui maapinnal. Aktiivsed päeval, ööbivad puude otsa ehitatud pesades. Söövad puuvilju, lehti, seemneid, marju, putukaid. Vahel söövad šimpansid ka liha, püüdes üheskoos saagiks väiksemaid loomi. Elavad 20–30-isendilistes seltsingutes, kus valitseb keeruline võimujaotus. Karjasisestes suhetes on nad väga sallivad, kuid võõrast karjast sissetungijate vastu vaenulikud. Sigivad läbi aasta, pärast 230-päevast tiinust toob emane ilmale 1 poja. Emast võõrdumine algab u. 5. eluaastast. Suguküpsuse saavutavad 12–15-aastastena. Eluiga kuni 50 a. Geneetiliselt on šimpans inimese lähim elav sugulane. Šimpanseid ohustab vihmametsade hävitamine ja salaküttimine.", new Guid("f249d2ba-5bb4-486d-b0da-c9c0acdac1e3"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Simpans", null }
+                    { new Guid("e24360c3-ef70-443d-bb42-dfc3d790e745"), "Halichoerus grypus", new Guid("78202fb8-b51e-4177-9f68-acb9d3cf6c3d"), new DateTime(2019, 5, 14, 14, 51, 57, 766, DateTimeKind.Local).AddTicks(3752), "Hallhüljes (Halichoerus grypus) on loivaliste (Pinnipedia) seltsi hülglaste (Phocidae) sugukonda kuuluv veeimetaja. Hallhüljes on Läänemere imetajatest suurim [1]. Ta on üks kolmest Eestis elavast hülglasest, omanimelise perekonna ainuliik.", new Guid("c15a9527-ce53-4938-959f-91fba1f86037"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Hallhüljes", null },
+                    { new Guid("91668f09-7e3b-4b48-9b99-a99ec9bab704"), "Panthera leo", new Guid("922b93a0-f05d-4b82-a4bf-5980d2b1b58a"), new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(5843), "Lõvid on väga suured ja võimsa kehaehitusega. Isaste kehapikkus on 180–240 cm, saba pikkus 60–90 cm, mass 180–227 kg. Kere on sale, isegi kiitsakas. Pea on erakordselt massiivne, võrdlemisi pika koonuga. Jäsemed on lüheldased ja väga tugevad. Pikk saba lõpeb tutiga. Keha katab lühikene pruunikaskollane karvastik. Täiskasvanud isasloomal on pikk tumedam lakk, mis katab nii kaela, õlgu kui ka rinda.", new Guid("4abde759-cc78-409e-986e-8a9eb08bff7d"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Lõvi", null },
+                    { new Guid("8e45bca4-b6db-40c4-a78b-b295b9d3dcd6"), "Macaca fuscata", new Guid("78202fb8-b51e-4177-9f68-acb9d3cf6c3d"), new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(5906), "Jässaka kehaehituse ja tiheda karvakasukaga jaapani makaagid on kõige põhjapoolsema levikuga ahvid. Talvekülmade eest otsivad kaitset kuumaveeallikates. Tegutsevad nii puudel kui maapinnal, ujuvad ja sukelduvad suurepäraselt. Söövad puuvilju, taimede lehti ja juuri, putukaid, limuseid jms, ka pisiimetajaid. Elavad gruppidena, mida juhib tugev isasloom ja kus on selgelt välja kujunenud alluvussuhted. Omavahelisel suhtlemisel on tähtsal kohal häälitsused, miimika ja žestid. Pojad sünnivad enamasti kevad-suvel. Järglaste eest hoolitseb sageli ka isane. Loomaaias on elanud kuni 35 aastat vanaks.", new Guid("4504700e-44c8-4741-87d6-3093a11b0f03"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Jaapani makaak", null },
+                    { new Guid("211634e3-04f7-403e-81ff-c64229036005"), "Phacochoerus africanus", new Guid("78202fb8-b51e-4177-9f68-acb9d3cf6c3d"), new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(5933), "Asustavad savanne ja hõredaid põõsastikke, vältides tihedaid metsi. Elavad rühmades, kuhu kuulu-vad 1–3 emist koos põrsastega. Kuldid hoiavad eraldi. Tegutsevad päeval, veetes öö urus, kuhu täiskasvanud sisenevad tagurpidi, sulgedes uruava oma suure tüükalise peaga. Toituvad rohttaimedest, liikudes ringi poolroomates “põlvili”, esijäsemetel on randmeliigese kohal paksud mõhnad. Sigivad aasta läbi, kuigi enim poegi on vihmaperioodil. Jooksuajal teevad isased mootoripodinat meenutavat häält ja katsuvad rammu, surudes teineteist teelt, laubad vastamisi. Emane sünnitab urus 3–4 vöötideta põrsast.", new Guid("8c3f3234-142b-47e2-8db2-2b570e003953"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Tüügassiga", null },
+                    { new Guid("f2edd8b2-9c37-49a8-b3ef-6c95559b70aa"), "Pan troglodytes", new Guid("78202fb8-b51e-4177-9f68-acb9d3cf6c3d"), new DateTime(2019, 5, 14, 14, 51, 57, 768, DateTimeKind.Local).AddTicks(5920), "Asustavad metsi, võsastikke ja kohati ka lagedamaid alasid. Tegutsevad nii puudel kui maapinnal. Aktiivsed päeval, ööbivad puude otsa ehitatud pesades. Söövad puuvilju, lehti, seemneid, marju, putukaid. Vahel söövad šimpansid ka liha, püüdes üheskoos saagiks väiksemaid loomi. Elavad 20–30-isendilistes seltsingutes, kus valitseb keeruline võimujaotus. Karjasisestes suhetes on nad väga sallivad, kuid võõrast karjast sissetungijate vastu vaenulikud. Sigivad läbi aasta, pärast 230-päevast tiinust toob emane ilmale 1 poja. Emast võõrdumine algab u. 5. eluaastast. Suguküpsuse saavutavad 12–15-aastastena. Eluiga kuni 50 a. Geneetiliselt on šimpans inimese lähim elav sugulane. Šimpanseid ohustab vihmametsade hävitamine ja salaküttimine.", new Guid("7eb5a7bf-a5c3-45b6-84f2-5e1bbfc90bde"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Šimpans", null }
                 });
 
             migrationBuilder.InsertData(
@@ -521,21 +540,21 @@ namespace DAL.App.EF.Migrations
                 columns: new[] { "Id", "AnimalId", "Description", "Label" },
                 values: new object[,]
                 {
-                    { new Guid("f15bcc3a-3b5c-4b23-831d-5dc8b326248e"), new Guid("90de391c-a3dc-4aa1-9208-011ef4b6718e"), "Hallhülge eluiga jääb tavaliselt 15–25 aasta vahele. Vanim loodusest leitud isend oli 46-aastane emane.", "Eluiga" },
-                    { new Guid("c32d65a3-d8c8-45f2-82c9-322fe359d177"), new Guid("90de391c-a3dc-4aa1-9208-011ef4b6718e"), "Hallhülge ladinakeelse nimetuse tähendus tuleb kreekakeelsetest sõnadest Halios – meri, khoiros – siga ja grupos – konksnina.", "Nimetus" },
-                    { new Guid("a45b72f3-061c-4e33-b2ce-68ebc8161a6b"), new Guid("3b233f62-c406-4850-bffa-fbb8809b74a8"), "Läbi aegade on lõvi peetud loomade kuningaks. See sai alguse raamatust \"Physiologus\".", "Loomade kuningas" }
+                    { new Guid("4314b535-c9a7-44cb-8cfc-f0ea70d680b1"), new Guid("e24360c3-ef70-443d-bb42-dfc3d790e745"), "Hallhülge eluiga jääb tavaliselt 15–25 aasta vahele. Vanim loodusest leitud isend oli 46-aastane emane.", "Eluiga" },
+                    { new Guid("bd2bd2db-91e2-41d5-a962-e6ea70573b6e"), new Guid("e24360c3-ef70-443d-bb42-dfc3d790e745"), "Hallhülge ladinakeelse nimetuse tähendus tuleb kreekakeelsetest sõnadest Halios – meri, khoiros – siga ja grupos – konksnina.", "Nimetus" },
+                    { new Guid("50909a13-284e-4557-823c-a408e20155d4"), new Guid("91668f09-7e3b-4b48-9b99-a99ec9bab704"), "Läbi aegade on lõvi peetud loomade kuningaks. See sai alguse raamatust \"Physiologus\".", "Loomade kuningas" }
                 });
 
             migrationBuilder.InsertData(
                 table: "MapSegment",
-                columns: new[] { "Id", "AnimalId", "AppMapId", "Latitude", "Longitude", "Name" },
+                columns: new[] { "Id", "AnimalId", "AppMapId", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("ced5e15e-bfa2-40ca-b69f-dd1af627b2c1"), new Guid("90de391c-a3dc-4aa1-9208-011ef4b6718e"), new Guid("1fefc037-df28-4bfe-9f65-65918be312ed"), 59.451625300000003, 24.717528000000001, "Hallhülge bassein" },
-                    { new Guid("dd27b43a-d1d6-4e45-a876-2346d4d02a03"), new Guid("3b233f62-c406-4850-bffa-fbb8809b74a8"), new Guid("1fefc037-df28-4bfe-9f65-65918be312ed"), 59.4514493, 24.717574899999999, "Lõvipuur" },
-                    { new Guid("90783308-2044-4dbe-930a-5092798c9932"), new Guid("6c10d341-465a-4fc1-902e-d55f58d57a5a"), new Guid("1fefc037-df28-4bfe-9f65-65918be312ed"), 59.451569300000003, 24.717741199999999, "Ahvipuur - Jaapani Makaak" },
-                    { new Guid("1b218311-e37a-4413-9ff8-c31ad5a9b548"), new Guid("b493b31f-53ea-4ea3-8774-6c31fd5f5694"), new Guid("1fefc037-df28-4bfe-9f65-65918be312ed"), 59.451567400000002, 24.7173722, "Tüügassea aedik" },
-                    { new Guid("b6ffd553-bc2e-4f4b-a805-be37b36e0f51"), new Guid("75436cc9-9a97-4d75-9037-e714f286d456"), new Guid("1fefc037-df28-4bfe-9f65-65918be312ed"), 59.451469899999999, 24.717251099999999, "Simpansite aed" }
+                    { new Guid("453ee0f6-78e9-40d6-ba3b-3d8a0640f420"), new Guid("e24360c3-ef70-443d-bb42-dfc3d790e745"), new Guid("4fd691de-e726-42ae-8831-ded116db2e1e"), "Hallhülge bassein" },
+                    { new Guid("958d7e70-e7d3-42b3-8c2f-4ed6106d03e2"), new Guid("91668f09-7e3b-4b48-9b99-a99ec9bab704"), new Guid("4fd691de-e726-42ae-8831-ded116db2e1e"), "Lõvipuur" },
+                    { new Guid("9cc92bf1-d090-4306-b02c-c9f1da1019dd"), new Guid("8e45bca4-b6db-40c4-a78b-b295b9d3dcd6"), new Guid("4fd691de-e726-42ae-8831-ded116db2e1e"), "Ahvipuur - Jaapani Makaak" },
+                    { new Guid("dc6ff54c-1b6d-4378-95e0-3d3aba33cd0e"), new Guid("211634e3-04f7-403e-81ff-c64229036005"), new Guid("4fd691de-e726-42ae-8831-ded116db2e1e"), "Tüügassea aedik" },
+                    { new Guid("71d894c6-c0c4-41a5-a192-c6d7850e2ed5"), new Guid("f2edd8b2-9c37-49a8-b3ef-6c95559b70aa"), new Guid("4fd691de-e726-42ae-8831-ded116db2e1e"), "Šimpansite aed" }
                 });
 
             migrationBuilder.InsertData(
@@ -543,14 +562,26 @@ namespace DAL.App.EF.Migrations
                 columns: new[] { "AnimalId", "SoundTrackId", "Id", "IsFeatured" },
                 values: new object[,]
                 {
-                    { new Guid("90de391c-a3dc-4aa1-9208-011ef4b6718e"), new Guid("e167329f-4473-4267-9c5d-3027f01c57ce"), new Guid("343f8a63-46a4-4916-83f2-859128524f8c"), true },
-                    { new Guid("3b233f62-c406-4850-bffa-fbb8809b74a8"), new Guid("cdbfe51d-e9a1-493c-a611-fbfa1d76cbbb"), new Guid("3604a989-676d-4e78-85f5-42e76d8cd4a5"), true },
-                    { new Guid("6c10d341-465a-4fc1-902e-d55f58d57a5a"), new Guid("ae6e2c2c-1e7d-475b-beec-ffb53130757b"), new Guid("fa8f4bb9-7401-474d-98c4-f5afca6266b1"), true },
-                    { new Guid("6c10d341-465a-4fc1-902e-d55f58d57a5a"), new Guid("022c10d3-1ef8-4606-810a-58dd51fe319b"), new Guid("6d1f32dd-b891-4dab-be2a-83c49ed427cc"), false },
-                    { new Guid("6c10d341-465a-4fc1-902e-d55f58d57a5a"), new Guid("889e743b-3ab8-41a9-b7de-1bda37de9bd0"), new Guid("ffceabee-e2b9-47a0-a812-31f70de552b0"), false },
-                    { new Guid("6c10d341-465a-4fc1-902e-d55f58d57a5a"), new Guid("67b00230-bbd0-40f5-998b-6b4e7b79f31e"), new Guid("09da8cc2-596b-4921-a668-0b260249348f"), false },
-                    { new Guid("b493b31f-53ea-4ea3-8774-6c31fd5f5694"), new Guid("78829890-edbe-491b-a27d-900f5457606b"), new Guid("6bab48f6-1cc2-415c-9008-ec319212bd6b"), true },
-                    { new Guid("75436cc9-9a97-4d75-9037-e714f286d456"), new Guid("4c0154a4-10b5-43c6-ab4a-7b2d4acb638e"), new Guid("b0763070-2ebe-4fb8-80b6-d28e516337ec"), true }
+                    { new Guid("e24360c3-ef70-443d-bb42-dfc3d790e745"), new Guid("278a22a3-580e-4b70-8b18-19a6f9d67a00"), new Guid("019eed61-5875-4cb1-8c90-594d4986ad75"), true },
+                    { new Guid("91668f09-7e3b-4b48-9b99-a99ec9bab704"), new Guid("ca08cae5-d38c-4194-b850-bc1018268649"), new Guid("c5891d55-b656-4b1b-b47e-8cc9543c5f03"), true },
+                    { new Guid("8e45bca4-b6db-40c4-a78b-b295b9d3dcd6"), new Guid("52d30bdc-fb30-40aa-9d6a-a81f7a0dd519"), new Guid("842fb276-a826-4fc9-a450-70c156e81c46"), true },
+                    { new Guid("8e45bca4-b6db-40c4-a78b-b295b9d3dcd6"), new Guid("ead5bd8a-1535-4661-a477-d9efa39fab30"), new Guid("f487b8fd-5888-4b67-bd88-8ea3083778c2"), false },
+                    { new Guid("8e45bca4-b6db-40c4-a78b-b295b9d3dcd6"), new Guid("b758d1ae-3c48-4566-a47b-5a0f172c9739"), new Guid("6e995e97-1f3a-4b12-9b8d-94ff1a0f1cad"), false },
+                    { new Guid("8e45bca4-b6db-40c4-a78b-b295b9d3dcd6"), new Guid("8f909c41-a935-4691-97b4-e0d076151e0a"), new Guid("d282ff90-b385-4383-a51e-94f51163a63a"), false },
+                    { new Guid("211634e3-04f7-403e-81ff-c64229036005"), new Guid("c8481863-0e6c-4fda-b363-ac6d826a010d"), new Guid("aa973ac9-8645-44fa-aba0-c0ceb2652b2f"), true },
+                    { new Guid("f2edd8b2-9c37-49a8-b3ef-6c95559b70aa"), new Guid("4643af16-75e5-47a7-8e22-07dfaec59350"), new Guid("603a21f9-4e5c-46fd-9d75-6e8841e2463c"), true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "GeoCoordinate",
+                columns: new[] { "Id", "Created", "Latitude", "Longitude", "MapSegmentId" },
+                values: new object[,]
+                {
+                    { new Guid("b7337199-1b9e-4c37-9544-7d1165674784"), new DateTime(2019, 5, 14, 14, 51, 57, 769, DateTimeKind.Local).AddTicks(724), 59.451625300000003, 24.717528000000001, new Guid("453ee0f6-78e9-40d6-ba3b-3d8a0640f420") },
+                    { new Guid("5eedeba4-6028-4616-9d1d-b8cc9523849f"), new DateTime(2019, 5, 14, 14, 51, 57, 769, DateTimeKind.Local).AddTicks(1215), 59.4514493, 24.717574899999999, new Guid("958d7e70-e7d3-42b3-8c2f-4ed6106d03e2") },
+                    { new Guid("e9a1b22a-a7b8-4fc1-bb6f-964edd3242df"), new DateTime(2019, 5, 14, 14, 51, 57, 769, DateTimeKind.Local).AddTicks(1200), 59.451569300000003, 24.717741199999999, new Guid("9cc92bf1-d090-4306-b02c-c9f1da1019dd") },
+                    { new Guid("c84aebfd-350b-4935-9d3f-d6330bbc940f"), new DateTime(2019, 5, 14, 14, 51, 57, 769, DateTimeKind.Local).AddTicks(1306), 59.451567400000002, 24.7173722, new Guid("dc6ff54c-1b6d-4378-95e0-3d3aba33cd0e") },
+                    { new Guid("2cee4b21-8c16-4e23-9cd9-74cb8cdb0906"), new DateTime(2019, 5, 14, 14, 51, 57, 769, DateTimeKind.Local).AddTicks(1297), 59.451469899999999, 24.717251099999999, new Guid("71d894c6-c0c4-41a5-a192-c6d7850e2ed5") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -613,10 +644,16 @@ namespace DAL.App.EF.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GeoCoordinate_MapSegmentId",
+                table: "GeoCoordinate",
+                column: "MapSegmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MapSegment_AnimalId",
                 table: "MapSegment",
                 column: "AnimalId",
-                unique: true);
+                unique: true,
+                filter: "[AnimalId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MapSegment_AppMapId",
@@ -683,7 +720,7 @@ namespace DAL.App.EF.Migrations
                 name: "Feedback");
 
             migrationBuilder.DropTable(
-                name: "MapSegment");
+                name: "GeoCoordinate");
 
             migrationBuilder.DropTable(
                 name: "MediaInAnimal");
@@ -698,16 +735,19 @@ namespace DAL.App.EF.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AppMap");
+                name: "MapSegment");
 
             migrationBuilder.DropTable(
                 name: "SoundTrack");
 
             migrationBuilder.DropTable(
+                name: "Status");
+
+            migrationBuilder.DropTable(
                 name: "Animal");
 
             migrationBuilder.DropTable(
-                name: "Status");
+                name: "AppMap");
 
             migrationBuilder.DropTable(
                 name: "ConservationStatus");

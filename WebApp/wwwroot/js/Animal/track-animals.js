@@ -23,7 +23,7 @@ var vm = new Vue({
     calculationCycles: 0
   },
   created: function () {
-    this.animalList = JSON.parse(document.getElementById("animalList").textContent);
+    this.animalList = JSON.parse(document.getElementById("animal-list").textContent);
     //this.distance = this.getDistance(this.animalLocation, this.userCurrentLocation);
     this.getLocation();
     this.startWatchLocation();
@@ -80,20 +80,28 @@ var vm = new Vue({
         var start = new Date();
         this.calculationCycles = 0;
         
-        for(var j=0; j < 20000; j++) {
+        //for(var j=0; j < 20000; j++) {
           for(var i=0; i < this.animalList.length; i++) {
+            
+            var curDistanceFromPoint = [];
 
-            var animalLocation = {
-              lat: this.animalList[i].MapSegment.Latitude,
-              lng: this.animalList[i].MapSegment.Longitude
-            };
+            for(var k=0; k < this.animalList[i].MapSegment.GeoCoordinates.length; k++) {
+              
+              var animalLocation = {
+                lat: this.animalList[i].MapSegment.GeoCoordinates[k].Latitude,
+                lng: this.animalList[i].MapSegment.GeoCoordinates[k].Longitude
+              };
+
+              curDistanceFromPoint.push(this.getDistance(this.userCurrentLocation, animalLocation).toFixed(3));
+            }
+            console.log(curDistanceFromPoint);
+
+            this.animalList[i].DistanceFromUser = Math.min.apply( Math, curDistanceFromPoint );
 
             //this.animalList[i].DistanceFromUser = google.maps.geometry.spherical.computeDistanceBetween (new google.maps.LatLng(this.userCurrentLocation.lat, this.userCurrentLocation.lng), new google.maps.LatLng(animalLocation.lat, animalLocation.lng));
-            this.animalList[i].DistanceFromUser = this.getDistance(this.userCurrentLocation, animalLocation).toFixed(3);
-            
-            this.calculationCycles += 1;
+            //this.calculationCycles += 1;
           }
-        }
+        //}
 
         this.elapsedTime = new Date() - start;
 

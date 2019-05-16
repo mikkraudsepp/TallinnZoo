@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.ViewModels.Animal;
+using WebApp.ViewModels.Media;
 
 namespace WebApp.Controllers
 {
@@ -19,14 +20,14 @@ namespace WebApp.Controllers
         // GET: Animal
         public async Task<IActionResult> Index()
         {
-            var model = new IndexModel();
+            var model = new AnimalListModel();
 
             model.Animals = (await _bll.Animals.AllAsync()).Select(
-                    animal => new AnimalListModel()
+                    animal => new AnimalItemModel()
                     {
                         Id = animal.Id,
                         Name = animal.Name,
-                        Image = new ImageListModel()
+                        Image = new ImageModel()
                         {
                             Name = animal.FeaturedImg.Name,
                             Url = animal.FeaturedImg.Url
@@ -113,16 +114,21 @@ namespace WebApp.Controllers
                     MapSegment = new MapSegmentModel()
                     {
                         Name = animal.MapSegment.Name,
-                        Latitude = animal.MapSegment.Latitude,
-                        Longitude = animal.MapSegment.Longitude
+                        GeoCoordinates = animal.MapSegment.GeoCoordinates.Select(
+                            geoCoordinate => new GeoCoordinateModel()
+                            {
+                                Latitude = geoCoordinate.Latitude,
+                                Longitude = geoCoordinate.Longitude
+                            }
+                        ).ToList()
                     },
-                    Image = new ImageListModel()
+                    Image = new ImageModel()
                     {
                         Name = animal.FeaturedImg.Name,
                         Url = animal.FeaturedImg.Url
                     }
                 }
-            );
+            ); 
             
             return View(model);
         }

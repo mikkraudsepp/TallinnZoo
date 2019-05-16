@@ -11,6 +11,7 @@ namespace Contracts.BLL.App
         IConservationStatusService ConservationStatuses { get; }
         IAppMapService AppMaps { get; }
         IMapSegmentService MapSegments { get; }
+        IGeoCoordinateService GeoCoordinates { get; }
 
         IMediaService Medias { get; }
         IMediaInAnimalService MediaInAnimals { get; }

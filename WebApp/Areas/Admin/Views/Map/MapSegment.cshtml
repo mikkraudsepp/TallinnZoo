@@ -1,0 +1,60 @@
+@model WebApp.Areas.Admin.ViewModels.Map.MapSegment.MapSegmentModel
+
+@{
+ViewData["Title"] = "Asukoht kaardil";
+}
+
+<div class="map-segments-page page" id="map-segments-page">
+    <section class="row">
+        <div class="col-md-8">
+            <h5 class="heading">
+                @Model.Name
+            </h5>
+        </div>
+        <div class="col-md-4 text-left text-lg-right">
+            <form asp-action="Delete">
+                <input asp-for="Id" type="hidden">
+                <button class="btn btn-action" type="submit">
+                    Kustuta segment<i class="far fa-trash-alt ml-2"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <div class="heading-divider"></div>
+    
+    <div class="row">
+        <div class="col-12 text-right mt-3">
+            <a asp-area="Admin" asp-controller="Map" asp-action="GeoCoordinate" asp-route-mapSegmentId="@Model.Id" class="btn btn-success">
+                Lisa koordinaat
+                <i class="fas fa-plus white ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    @foreach (var geoCoordinate in Model.GeoCoordinates)
+    {
+        <div class="card-white-round p-3 mt-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label asp-for="@geoCoordinate.Longitude" class="input-label">Pikkuskraad</label>
+                    <input asp-for="@geoCoordinate.Longitude" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="@geoCoordinate.Latitude" class="input-label">Laiuskraad</label>
+                    <input asp-for="@geoCoordinate.Latitude" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <div class="text-right py-1">
+                        <form asp-area="Admin" asp-controller="Map" asp-action="GeoCoordinateDelete" method="post">
+                            <input value="@geoCoordinate.Id" name="id" type="hidden">
+                            <button class="btn btn-secondary mt-4" type="submit">
+                                Eemalda<i class="fas fa-times ml-2 gray"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

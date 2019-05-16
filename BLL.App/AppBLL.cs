@@ -21,6 +21,7 @@ namespace BLL.App
         public IConservationStatusService ConservationStatuses => ServiceProvider.GetService<IConservationStatusService>();
         public IAppMapService AppMaps => ServiceProvider.GetService<IAppMapService>();
         public IMapSegmentService MapSegments => ServiceProvider.GetService<IMapSegmentService>();
+        public IGeoCoordinateService GeoCoordinates => ServiceProvider.GetService<IGeoCoordinateService>();
         public IMediaService Medias => ServiceProvider.GetService<IMediaService>();
         public ISoundTrackService SoundTracks => ServiceProvider.GetService<ISoundTrackService>();
         public IMediaInAnimalService MediaInAnimals => ServiceProvider.GetService<IMediaInAnimalService>();

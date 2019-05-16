@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Domain;
 using Domain.Animals;
+using Domain.Map;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Areas.Admin.ViewModels.Animal;
@@ -54,7 +55,20 @@ namespace WebApp.Areas.Admin.Controllers
             model.Description = animal.Description;
             model.BinomialName = animal.BinomialName;
             model.ConservationStatusId = animal.ConservationStatusId;
-            
+
+            if (animal.MapSegment != null)
+            {
+                model.MapSegment = new MapSegmentModel()
+                {
+                    Id = animal.MapSegment.Id,
+                    Name = animal.MapSegment.Name
+                };
+            }
+            else
+            {
+                model.MapSegment = new MapSegmentModel();
+            }
+
             model.ConservationStatuses = (await _bll.ConservationStatuses.AllAsync()).Select(
                 conservationStatus => new SelectListItem()
                 {
@@ -75,6 +89,15 @@ namespace WebApp.Areas.Admin.Controllers
                 };
             }
 
+            model.MapSegmentsSelectListItems = (await _bll.MapSegments.AllAsync()).Select(
+                mapSegment => new SelectListItem()
+                {
+                    Selected = mapSegment.Id == animal.MapSegment.Id,
+                    Value = mapSegment.Id.ToString(),
+                    Text = mapSegment.Name
+                }
+            ).ToList();
+
             return View(model);
         }
 
@@ -83,16 +106,16 @@ namespace WebApp.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost("add-animal")]
-        public async Task<IActionResult> AddAnimal(AnimalPostModel model)
+        [HttpPost]
+        public async Task<IActionResult> AddAnimal(AnimalModel model)
         {
             if (ModelState.IsValid)
             {
-                Animal animal = new Animal()
+                var animal = new Animal()
                 {
                     Name = model.Name,
-                    Description = "Looma kirjeldus", //TODO: static input
-                    BinomialName = "BioName" //TODO: static input
+                    Description = model.Description,
+                    BinomialName = model.BinomialName
                 };
 
                 await _bll.Animals.AddAsync(animal);
@@ -105,7 +128,6 @@ namespace WebApp.Areas.Admin.Controllers
             return View(nameof(Add));
         }
 
-        [Route("animal-added")]
         public ActionResult AnimalAdded()
         {
             return View();
@@ -140,14 +162,30 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            
-            animal.Name = model.Name;
-            animal.Description = model.Description;
-            animal.BinomialName = model.BinomialName;
-            animal.ConservationStatusId = model.ConservationStatusId;
 
-            _bll.Animals.Update(animal);
-            await _bll.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                animal.Name = model.Name;
+                animal.Description = model.Description;
+                animal.BinomialName = model.BinomialName;
+                animal.ConservationStatusId = model.ConservationStatusId;
+
+                animal.Name = model.Name;
+                animal.Description = model.Description;
+                animal.BinomialName = model.BinomialName;
+
+                var mapSegment = await _bll.MapSegments.FindAsync(model.MapSegment.Id);
+
+                if (mapSegment != null)
+                {
+                    //animal.MapSegment = mapSegment;
+                    mapSegment.Animal = animal;
+                }
+
+                _bll.MapSegments.Update(mapSegment);
+                //_bll.Animals.Update(animal);
+                await _bll.SaveChangesAsync();
+            }
 
             return RedirectToAction(nameof(Details), new {id = model.Id});
         }

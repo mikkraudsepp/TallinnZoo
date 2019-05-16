@@ -21,7 +21,6 @@ ViewData["Title"] = "Animal";
             </form>
         </div>
     </section>
- 
 
     <div class="heading-divider"></div>
 
@@ -40,8 +39,33 @@ ViewData["Title"] = "Animal";
 
                 <label asp-for="ConservationStatusId" class="input-label mt-4">Ohustaatus</label>
                 <select asp-for="ConservationStatusId" asp-items="Model.ConservationStatuses" class="custom-select"></select>
+                
+                <div class="row mt-7">
+                    <div class="col-md-8">
+                        <h5 class="heading">
+                            Asukoht
+                        </h5>
+                    </div>
+                    <div class="col-lg-4 text-left text-lg-right">
+                        <a class="btn-action cursor-pointer" data-toggle="modal" data-target="#changeMapSegmentModal">
+                            Lisa asukoht
+                            <i class="fas fa-plus color-success ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="heading-divider mb-2"></div>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="MapSegment.Id" class="input-label mt-4">Asukohad</label>
+                        <select asp-for="MapSegment.Id" asp-items="Model.MapSegmentsSelectListItems" class="custom-select">
+                            <option value="">Ei ole asukohta</option>
+                        </select>
+                    </div>
+                </div>
 
-                <div class="row mt-5">
+                <div class="row mt-7">
                     <div class="col-md-8">
                         <h5 class="heading">
                             Pildid
@@ -54,12 +78,16 @@ ViewData["Title"] = "Animal";
                         </a>
                     </div>
                 </div>
+
                 <div class="heading-divider mb-4"></div>
 
                 <div class="card-white-round p-3">
                     <div class="row">
                         <div class="col-md-5">
-                            <img class="radius-5 h-100 w-100" src="/@Model.FeaturedImage.Url" />
+                            @if (@Model.FeaturedImage != null)
+                            {
+                                <img class="radius-5 h-100 w-100" src="/@Model.FeaturedImage.Url"/>
+                            }
                         </div>
                         <div class="col-md-7">
                             <div class="text-right py-1">
@@ -83,7 +111,7 @@ ViewData["Title"] = "Animal";
                     </div>
                 </div>
 
-                <div class="row mt-5">
+                <div class="row mt-7">
                     <div class="col-md-8">
                         <h5 class="heading">
                             Heliklipid
@@ -136,4 +164,30 @@ ViewData["Title"] = "Animal";
             </div>
         </section>
     </form>
+
+    <div class="modal fade" id="changeMapSegmentModal" tabindex="-1" role="dialog" aria-labelledby="changeMapSegmentModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeMapSegmentModalLabel">Muuda asukohta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        @await Html.PartialAsync("Components/_MapSegmentChange")
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Sulge</button>
+                    <button type="button" class="btn btn-primary">Salvesta asukoht</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
