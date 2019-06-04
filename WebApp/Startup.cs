@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.App;
@@ -23,10 +24,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using WebApp.Helpers;
 
 namespace WebApp
@@ -51,8 +54,11 @@ namespace WebApp
             });
 
             services.AddDbContext<AppDbContext>(options =>
+            {
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
+                    Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies();
+                options.EnableSensitiveDataLogging();
+            });
             
             services.AddScoped<IDataContext, AppDbContext>();
             services.AddSingleton<IRepositoryFactory, AppRepositoryFactory>();
@@ -70,6 +76,18 @@ namespace WebApp
                 .AddDefaultTokenProviders();
 
             services.AddTransient<IEmailSender, EmailSender>();
+
+            services.Configure<RequestLocalizationOptions>(options => { 
+                var supportedCultures = new[]
+                {
+                    new CultureInfo(name: "en"),
+                    new CultureInfo(name: "et")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: "en-GB", uiCulture: "en-GB");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -96,6 +114,9 @@ namespace WebApp
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseRequestLocalization(options: app.ApplicationServices
+                .GetService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseMvc(routes =>
             {

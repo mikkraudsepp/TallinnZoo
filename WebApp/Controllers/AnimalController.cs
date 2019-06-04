@@ -23,18 +23,25 @@ namespace WebApp.Controllers
             var model = new AnimalListModel();
 
             model.Animals = (await _bll.Animals.AllAsync()).Select(
-                    animal => new AnimalItemModel()
-                    {
-                        Id = animal.Id,
-                        Name = animal.Name,
-                        Image = new ImageModel()
+                animal => new AnimalItemModel()
+                {
+                    Id = animal.Id,
+                    Name = animal.Name,
+                    Image = animal.FeaturedImgId != null ?
+                        new ImageModel()
                         {
                             Name = animal.FeaturedImg.Name,
                             Url = animal.FeaturedImg.Url
+                        } : 
+                        new ImageModel()
+                        {
+                            Name = "",
+                            Url = ""
+                            //TODO icon or default image in no featured image is present
                         }
-                    }
-                );
-            
+                }
+            );
+
             return View(model);
         }
 
@@ -47,7 +54,7 @@ namespace WebApp.Controllers
             model.Name = animal.Name;
             model.Description = animal.Description;
             model.BinomialName = animal.BinomialName;
-            
+
             var featuredImage = await _bll.Medias.FindAsync(animal.FeaturedImgId);
             if (featuredImage != null)
             {
@@ -57,49 +64,32 @@ namespace WebApp.Controllers
                     Url = featuredImage.Url
                 };
             }
-            
-            foreach (var mediaInAnimal in animal.MediaInAnimals)
-            {
-                model.AnimalPictures.Add(new ImageModel
-                {
-                    Url = mediaInAnimal.Media.Url,
-                    Name = mediaInAnimal.Media.Name
-                });
-            }
-            
-            foreach (var soundTrack in animal.AnimalSoundTracks)
-            {
-                model.AnimalSoundTracks.Add(new SoundTrackModel()
-                {
-                    Name = soundTrack.SoundTrack.Name,
-                    Url = soundTrack.SoundTrack.Url
-                });
-            }
-            
-            
-//            model.AnimalPictures = (await _uow.Medias.AllAsync()).Select(
-//                image => new ImageModel()
-//                {
-//                    Name = image.Name,
-//                    Url = image.Url
-//                }
-//            );
 
-                model.Facts = (await _bll.AnimalFacts.AllAsync()).Select(
+            model.AnimalPictures =
+                animal.MediaInAnimals.Select(
+                    image => new ImageModel
+                    {
+                        Url = image.Media.Url,
+                        Name = image.Media.Name
+                    }).ToList();
+
+            model.AnimalSoundTracks =
+                animal.AnimalSoundTracks.Select(
+                    soundTrack => new SoundTrackModel()
+                    {
+                        Name = soundTrack.SoundTrack.Name,
+                        Url = soundTrack.SoundTrack.Url
+                    }).ToList();
+
+            model.Facts =
+                (await _bll.AnimalFacts.AllAsync()).Select(
                     fact => new FactModel()
                     {
                         Label = fact.Label,
                         Description = fact.Description
-                    }
-                );
+                    });
 
-                return View(model);
-        }
-
-        // GET: Animal/Create
-        public IActionResult Create()
-        {
-            return View();
+            return View(model);
         }
 
         public async Task<IActionResult> TrackAnimal()
@@ -122,14 +112,21 @@ namespace WebApp.Controllers
                             }
                         ).ToList()
                     },
-                    Image = new ImageModel()
-                    {
-                        Name = animal.FeaturedImg.Name,
-                        Url = animal.FeaturedImg.Url
-                    }
+                    Image = animal.FeaturedImgId != null ?
+                        new ImageModel()
+                        {
+                            Name = animal.FeaturedImg.Name,
+                            Url = animal.FeaturedImg.Url
+                        } : 
+                        new ImageModel()
+                        {
+                            Name = "",
+                            Url = ""
+                            //TODO icon or default image in no featured image is present
+                        }
                 }
-            ); 
-            
+            );
+
             return View(model);
         }
 

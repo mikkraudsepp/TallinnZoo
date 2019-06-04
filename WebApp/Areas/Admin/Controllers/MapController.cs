@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Domain;
 using Domain.Map;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Areas.Admin.ViewModels.Map.MapSegment;
@@ -11,6 +12,7 @@ using WebApp.Areas.Admin.ViewModels.Map.MapSegment;
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles = "Admin")]
     public class MapController : Controller
     {
         private readonly IAppBLL _bll;
@@ -45,10 +47,8 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var mapSegment = new MapSegment()
-                {
-                    Name = model.Name
-                };
+                var mapSegment = new MapSegment();
+                mapSegment.Name = new MultiLangString(model.Name);
 
                 await _bll.MapSegments.AddAsync(mapSegment);
                 await _bll.SaveChangesAsync();

@@ -1,0 +1,30 @@
+@model WebApp.Areas.Admin.ViewModels.Image.ImageModel
+
+@{
+    ViewData["Title"] = "Add image";
+}
+
+
+<div class="add-image-page page" id="add-image-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <h4 class="heading heading-line mt-4">
+                    @Texts.ImageAdd
+                </h4>
+                <form asp-action="AddImage" enctype="multipart/form-data" method="post" class="mt-4">
+                    <div class="form-group">
+                        <label class="font-weight-semibold mb-1" asp-for="Name">@Texts.ImageDetailsName</label>
+                        <input class="form-control" placeholder="" asp-for="Name" minlength="2"/>
+                        <span asp-validation-for="Name" class="invalid-feedback"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-semibold mb-1" asp-for="ImageFile">@Texts.ImageUpload</label>
+                        <input asp-for="ImageFile" type="file" Class="form-control py-4 h-100"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-5">@Texts.ImageAdd<i class="far fa-paper-plane ml-3"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

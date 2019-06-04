@@ -1,3 +1,7 @@
+using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
@@ -10,5 +14,21 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                key: CookieRequestCultureProvider.DefaultCookieName,
+                value: CookieRequestCultureProvider.MakeCookieValue(requestCulture: new RequestCulture(culture: culture)),
+                options: new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddYears(years: 1)
+                }
+            );
+
+            return LocalRedirect(localUrl: returnUrl);
+        }
+
     }
 }

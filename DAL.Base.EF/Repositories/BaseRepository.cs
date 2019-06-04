@@ -21,12 +21,12 @@ namespace DAL.Base.EF.Repositories
             RepositoryDbSet = RepositoryDbContext.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> All()
+        public virtual IList<TEntity> All()
         {
             return RepositoryDbSet.ToList();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> AllAsync()
+        public virtual async Task<IList<TEntity>> AllAsync()
         {
             return await RepositoryDbSet.ToListAsync();
         }

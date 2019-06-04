@@ -8,13 +8,14 @@ ViewData["Title"] = "Track location";
 
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 <script id="animal-list" type="application/json">@Html.Raw(JsonConvert.SerializeObject(Model.Animals))</script>
+<script src="/js/Animal/vincenty.js"></script>
 
 <main class="bg-brown-light track-animals-page page" id="track-animals-page" v-cloak>
     <div class="container-fluid">
         <div class="container-max">
             <div class="row">
                 <div class="col">
-                    <div class="my-4">
+                    @*<div class="my-4">
                         <div>Arvutustsükleid: {{calculationCycles}}</div>
                         <div>Arvutuseks kulus: {{elapsedTime}} ms</div>
                         <div>User lat: {{ userCurrentLocation.lat }}</div>
@@ -28,9 +29,9 @@ ViewData["Title"] = "Track location";
                         <div class="btn btn-primary" v-on:click="getLocalDistance()">
                             Get local distance
                         </div>
-                    </div>
+                    </div>*@
 
-                    <div class="animal-list bg-white">
+                    <div class="animal-list bg-white mt-4">
                         <a v-bind:href="'Details/'+ animal.Id" v-for="animal in animalList" class="row no-gutters animal-list-item">
                             <div class="col-auto">
                                 <img v-bind:src="'/' + animal.Image.Url" v-bind:alt="animal.Image.Name" class="animal-list-img">

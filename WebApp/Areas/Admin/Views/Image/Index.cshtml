@@ -1,0 +1,52 @@
+@model WebApp.Areas.Admin.ViewModels.Image.IndexModel
+
+@{
+ViewData["Title"] = "Images";
+}
+
+<div class="images-page page" id="images-page">
+    <div class="row">
+        <div class="col-lg-8">
+            <h5 class="heading">
+                @Texts.Images
+            </h5>
+        </div>
+        <div class="col-lg-4 text-left text-lg-right">
+            <a asp-area="Admin" asp-controller="Image" asp-action="Add" class="btn-action">
+                @Texts.ImageAdd
+                <i class="fas fa-plus color-success ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="heading-divider"></div>
+
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="input--white my-4">
+                <input type="text" name="name" value="" placeholder="@Texts.Search" autocomplete="off"
+                    class="searchbox form-control" />
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <div class="images-list">
+        <div class="row">
+            @foreach (var image in Model.Images)
+            {
+                <div class="col-lg-4 mb-4">
+                    <a asp-action="Details" asp-route-id="@image.Id" class="row bg-white no-gutters radius-5">
+                        <div class="col-12">
+                            <img class="radius-5 list-card-img" src="/@image.Url" />
+                        </div>
+                        <div class="col-12">
+                            <div class="p-3">
+                                @image.Name
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

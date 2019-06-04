@@ -6,25 +6,26 @@ ViewData["Title"] = "Animals";
 
 <div class="animals-page page" id="animals-page">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-8 order-1 order-md-1">
             <h5 class="heading">
-                Loomad
+                @Texts.Animals
             </h5>
         </div>
-        <div class="col-lg-4 text-left text-lg-right">
+        <div class="col-lg-4 text-right order-3 order-md-2 mt-4 mt-md-0">
             <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                Lisa loom
+                @Texts.AddAnimal
                 <i class="fas fa-plus color-success ml-2"></i>
             </a>
         </div>
+        <div class="col-12 order-2 order-md-3">
+            <div class="heading-divider"></div>
+        </div>
     </div>
-
-    <div class="heading-divider"></div>
 
     <div class="row">
         <div class="col-lg-5">
             <div class="input--white my-4">
-                <input type="text" name="name" value="" placeholder="Otsi" autocomplete="off"
+                <input type="text" name="name" value="" placeholder="@Texts.Search" autocomplete="off"
                     class="searchbox form-control" />
                 <i class="fas fa-search"></i>
             </div>

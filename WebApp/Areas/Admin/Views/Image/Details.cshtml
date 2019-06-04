@@ -1,0 +1,57 @@
+﻿@using Domain
+@model WebApp.Areas.Admin.ViewModels.Image.ImageModel
+
+@{
+ViewData["Title"] = "Animal";
+}
+
+<div class="animal-details-page page" id="animal-details-page">
+    <section class="row">
+        <div class="col-md-8">
+            <h5 class="heading">
+                @Model.Name
+            </h5>
+        </div>
+        <div class="col-md-4 text-left text-lg-right">
+            <form asp-action="Delete">
+                <input asp-for="Id" type="hidden">
+                <button class="btn btn-action" type="submit">
+                    @Texts.Delete<i class="far fa-trash-alt ml-2"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <div class="heading-divider"></div>
+
+    <form asp-action="Update" method="post">
+        <input asp-for="Id" type="hidden">
+        <section class="row mt-3">
+            <div class="col-lg-8">
+                <div class="mt-4">
+                    <img class="radius-5 details-img" src="/@Model.Url" />
+                </div>
+                <label asp-for="Name" class="input-label mt-4">@Texts.ImageDetailsName</label>
+                <input asp-for="Name" class="form-control">
+
+                <label asp-for="Url" class="input-label mt-4">@Texts.ImageUrl</label>
+                <input asp-for="Url" class="form-control" disabled>
+            </div>
+            <div class="col-lg-4">
+                <div class="card-white card-white-round mt-4 p-3">
+                    <label class="input-label">@Texts.Status</label>
+                    <select class="custom-select"></select>
+                    <div class="divider-brown-light my-4"></div>
+                    <div class="label-group">
+                        <span class="label">@Texts.LastChanged:</span> 15.11.19
+                    </div>
+                    <div class="label-group">
+                        <span class="label">@Texts.Created:</span> @Model.UploadedDateTime.Date.ToShortDateString()
+                    </div>
+                    <div class="divider-brown-light my-4"></div>
+                    <button class="btn btn-primary btn-block mt-4" type="submit">@Texts.Save</button>
+                </div>
+            </div>
+        </section>
+    </form>
+</div>

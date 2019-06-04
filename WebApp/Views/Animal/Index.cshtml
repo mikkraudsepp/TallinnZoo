@@ -1,4 +1,5 @@
-﻿@using Domain.Animals
+﻿@using System.Net.Mime
+@using Domain.Animals
 @using Newtonsoft.Json
 @model WebApp.ViewModels.Animal.AnimalListModel
 
@@ -16,7 +17,7 @@ ViewData["Title"] = "Animals";
             <div class="row">
                 <div class="col">
                     <div class="input--white my-4">
-                        <input type="text" name="name" value="" placeholder="Otsi" autocomplete="off"
+                        <input type="text" name="name" value="" placeholder="@Texts.Search" autocomplete="off"
                         class="searchbox form-control"
                         v-model="searchInput"/>
                         <i class="fas fa-search"></i>

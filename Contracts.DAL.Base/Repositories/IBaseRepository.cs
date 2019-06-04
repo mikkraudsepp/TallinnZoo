@@ -20,7 +20,7 @@ namespace Contracts.DAL.Base.Repositories
         where TEntity : class, IBaseEntity<TKey>, new()
         where TKey : struct, IComparable
     {
-        IEnumerable<TEntity> All();
+        IList<TEntity> All();
         TEntity Find(params object[] id);
         void Add(TEntity entity);
     }
@@ -29,7 +29,7 @@ namespace Contracts.DAL.Base.Repositories
         where TEntity : class, IBaseEntity<TKey>, new()
         where TKey : struct, IComparable
     {
-        Task<IEnumerable<TEntity>> AllAsync();
+        Task<IList<TEntity>> AllAsync();
         Task<TEntity> FindAsync(params object[] id);
         Task AddAsync(TEntity entity);
     }

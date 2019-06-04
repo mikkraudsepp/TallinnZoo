@@ -2,192 +2,174 @@
 @model WebApp.Areas.Admin.ViewModels.Animal.AnimalModel
 
 @{
-ViewData["Title"] = "Animal";
+    ViewData["Title"] = "Animal";
 }
 
 <div class="animal-details-page page" id="animal-details-page">
     <section class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 order-1 order-md-1">
             <h5 class="heading">
                 @Model.Name
             </h5>
         </div>
-        <div class="col-md-4 text-left text-lg-right">
+        <div class="col-md-4 text-right order-3 order-md-2 mt-4 mt-md-0">
             <form asp-action="Delete">
                 <input asp-for="Id" type="hidden">
                 <button class="btn btn-action" type="submit">
-                    Kustuta<i class="far fa-trash-alt ml-2"></i>
+                    @Texts.Delete<i class="far fa-trash-alt ml-2"></i>
                 </button>
             </form>
         </div>
+        <div class="col-12 order-2 order-md-3">
+            <div class="heading-divider"></div>
+        </div>
     </section>
 
-    <div class="heading-divider"></div>
+    <section class="row mt-3">
+        <div class="col-lg-8 order-2 order-lg-1">
+            <form asp-action="Update" method="post" id="animal-details-form">
+                <input asp-for="Id" type="hidden">
 
-    <form asp-action="Update" method="post">
-        <input asp-for="Id" type="hidden">
-        <section class="row mt-3">
-            <div class="col-lg-8">
-                <label asp-for="Name" class="input-label mt-4">Nimetus</label>
+                <label asp-for="Name" class="input-label mt-4">@Texts.AnimalDetailsName</label>
                 <input asp-for="Name" class="form-control">
 
-                <label asp-for="Description" class="input-label mt-4">Kirjeldus</label>
+                <label asp-for="Description" class="input-label mt-4">@Texts.AnimalDetailsDescription</label>
                 <textarea asp-for="Description" class="form-control animal-description"></textarea>
 
-                <label asp-for="BinomialName" class="input-label mt-4">Ladinakeelne nimetus</label>
+                <label asp-for="BinomialName" class="input-label mt-4">@Texts.AnimalDetailsBinomialName</label>
                 <input asp-for="BinomialName" class="form-control">
 
-                <label asp-for="ConservationStatusId" class="input-label mt-4">Ohustaatus</label>
+                <label asp-for="ConservationStatusId" class="input-label mt-4">@Texts.AnimalDetailsConservationStatus</label>
                 <select asp-for="ConservationStatusId" asp-items="Model.ConservationStatuses" class="custom-select"></select>
-                
+
                 <div class="row mt-7">
                     <div class="col-md-8">
                         <h5 class="heading">
-                            Asukoht
+                            @Texts.AnimalDetailsMapSegment
                         </h5>
                     </div>
-                    <div class="col-lg-4 text-left text-lg-right">
-                        <a class="btn-action cursor-pointer" data-toggle="modal" data-target="#changeMapSegmentModal">
-                            Lisa asukoht
-                            <i class="fas fa-plus color-success ml-2"></i>
-                        </a>
-                    </div>
                 </div>
-                
+
                 <div class="heading-divider mb-2"></div>
-                
+
                 <div class="row">
                     <div class="col-12">
-                        <label asp-for="MapSegment.Id" class="input-label mt-4">Asukohad</label>
+                        <label asp-for="MapSegment.Id" class="input-label mt-4">@Texts.AnimalDetailsMapSegment</label>
                         <select asp-for="MapSegment.Id" asp-items="Model.MapSegmentsSelectListItems" class="custom-select">
-                            <option value="">Ei ole asukohta</option>
+                            <option value="">@Texts.AnimalDetailsNoMapSegment</option>
                         </select>
                     </div>
                 </div>
+            </form>
 
-                <div class="row mt-7">
-                    <div class="col-md-8">
-                        <h5 class="heading">
-                            Pildid
-                        </h5>
-                    </div>
-                    <div class="col-lg-4 text-left text-lg-right">
-                        <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                            Lisa pilt
-                            <i class="fas fa-plus color-success ml-2"></i>
-                        </a>
-                    </div>
+            <div class="row mt-7">
+                <div class="col-md-8 order-1 order-md-1">
+                    <h5 class="heading">
+                        @Texts.AnimalDetailsImages
+                    </h5>
                 </div>
+                <div class="col-md-4 text-right order-3 order-md-2 mt-4 mt-md-0">
+                    <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
+                        @Texts.AnimalDetailsAddImage
+                        <i class="fas fa-plus color-success ml-2"></i>
+                    </a>
+                </div>
+                <div class="col-12 order-2 order-md-3">
+                    <div class="heading-divider"></div>
+                </div>
+            </div>
 
-                <div class="heading-divider mb-4"></div>
-
-                <div class="card-white-round p-3">
+            @if (@Model.FeaturedImage != null)
+            {
+                <div class="card-white-round p-3 mt-3">
                     <div class="row">
                         <div class="col-md-5">
-                            @if (@Model.FeaturedImage != null)
-                            {
-                                <img class="radius-5 h-100 w-100" src="/@Model.FeaturedImage.Url"/>
-                            }
+
+                            <img class="radius-5 h-100 w-100" src="/@Model.FeaturedImage.Url" />
                         </div>
                         <div class="col-md-7">
                             <div class="text-right py-1">
-                                <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                                    Eemalda
-                                    <i class="fas fa-times ml-2 gray"></i>
-                                </a>
+                                <form asp-action="RemoveImageFromAnimal" method="post">
+                                    <input asp-for="Id" type="hidden">
+
+                                    <button type="submit" class="btn btn-action">
+                                        @Texts.Remove
+                                        <i class="fas fa-times ml-2 gray"></i>
+                                    </button>
+                                </form>
                             </div>
                             <div class="text-right py-1">
-                                <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                                    Muuda
+                                <a asp-area="Admin" asp-controller="Image" asp-action="Details" asp-route-id="@Model.FeaturedImage.Id" class="btn btn-action">
+                                    @Texts.Change
                                     <i class="fas fa-pencil-alt ml-2 gray"></i>
                                 </a>
                             </div>
                             <div class="text-right py-1">
-                                <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                                    Määra peamiseks
+                                <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn btn-action">
+                                    @Texts.MakePrimary
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
+            }
+            else
+            {
+                <div class="text-center mt-4">Pildid puuduvad</div>
+            }
 
-                <div class="row mt-7">
-                    <div class="col-md-8">
-                        <h5 class="heading">
-                            Heliklipid
-                        </h5>
+            <div class="row mt-7">
+                <div class="col-md-8 order-1 order-md-1">
+                    <h5 class="heading">
+                        @Texts.AnimalDetailsSoundtracks
+                    </h5>
+                </div>
+                <div class="col-md-4 text-right order-3 order-md-2 mt-4 mt-md-0">
+                    <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
+                        @Texts.AddSoundTracks
+                        <i class="fas fa-plus color-success ml-2"></i>
+                    </a>
+                </div>
+                <div class="col-12 order-2 order-md-3">
+                    <div class="heading-divider"></div>
+                </div>
+            </div>
+
+            <div class="card-white-round p-3 mt-3">
+                <div class="row">
+                    <div class="col-6">
+                        1. Hallhülge lugu
                     </div>
-                    <div class="col-lg-4 text-left text-lg-right">
+                    <div class="col-auto ml-auto">
                         <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                            Lisa heliklipp
-                            <i class="fas fa-plus color-success ml-2"></i>
+                            @Texts.Change
+                            <i class="fas fa-pencil-alt ml-2 gray"></i>
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
+                            @Texts.Remove
+                            <i class="fas fa-times ml-2 gray"></i>
                         </a>
                     </div>
                 </div>
-                <div class="heading-divider mb-4"></div>
-
-                <div class="card-white-round p-3">
-                    <div class="row">
-                        <div class="col-6">
-                            1. Hallhülge lugu
-                        </div>
-                        <div class="col-auto ml-auto">
-                            <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                                Muuda
-                                <i class="fas fa-pencil-alt ml-2 gray"></i>
-                            </a>
-                        </div>
-                        <div class="col-auto">
-                            <a asp-area="Admin" asp-controller="Animal" asp-action="Add" class="btn-action">
-                                Eemalda
-                                <i class="fas fa-times ml-2 gray"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-            <div class="col-lg-4">
-                <div class="card-white card-white-round mt-4 p-3">
-                    <label asp-for="Description" class="input-label">Staatus</label>
-                    <select class="custom-select"></select>
-                    <div class="divider-brown-light my-4"></div>
-                    <div class="label-group">
-                        <span class="label">Viimati muudetud:</span> 15.11.19
-                    </div>
-                    <div class="label-group">
-                        <span class="label">Loodud:</span> 15.11.19
-                    </div>
-                    <div class="divider-brown-light my-4"></div>
-                    <button class="btn btn-primary btn-block mt-4" type="submit">Salvesta</button>
-                </div>
-            </div>
-        </section>
-    </form>
 
-    <div class="modal fade" id="changeMapSegmentModal" tabindex="-1" role="dialog" aria-labelledby="changeMapSegmentModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="changeMapSegmentModalLabel">Muuda asukohta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        </div>
+        <div class="col-lg-4 order-1 order-lg-2">
+            <div class="card-white card-white-round mt-4 p-3">
+                <label asp-for="Description" class="input-label">@Texts.Status</label>
+                <select class="custom-select"></select>
+                <div class="divider-brown-light my-4"></div>
+                <div class="label-group">
+                    <span class="label">@Texts.LastChanged:</span> 15.11.19
                 </div>
-                <div class="modal-body">
-                    <form>
-                        @await Html.PartialAsync("Components/_MapSegmentChange")
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
+                <div class="label-group">
+                    <span class="label">@Texts.Created:</span> 15.11.19
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Sulge</button>
-                    <button type="button" class="btn btn-primary">Salvesta asukoht</button>
-                </div>
+                <div class="divider-brown-light my-4"></div>
+                <button class="btn btn-primary btn-block mt-4" type="submit" form="animal-details-form">@Texts.Save</button>
             </div>
         </div>
-    </div>
+    </section>
 </div>

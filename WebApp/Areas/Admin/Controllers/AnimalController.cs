@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts.BLL.App;
 using Domain;
 using Domain.Animals;
 using Domain.Map;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Areas.Admin.ViewModels.Animal;
@@ -13,10 +15,10 @@ using AnimalModel = WebApp.Areas.Admin.ViewModels.Animal.AnimalModel;
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AnimalController : Controller
     {
         private readonly IAppBLL _bll;
-
 
         public AnimalController(IAppBLL bll)
         {
@@ -29,7 +31,7 @@ namespace WebApp.Areas.Admin.Controllers
             var model = new IndexModel();
 
             model.Animals = (await _bll.Animals.AllAsync()).Select(
-                animal => new AnimalListModel()
+                animal => new AnimalItemModel()
                 {
                     Id = animal.Id,
                     Name = animal.Name
@@ -89,10 +91,12 @@ namespace WebApp.Areas.Admin.Controllers
                 };
             }
 
+            model.MapSegmentsSelectListItems = new List<SelectListItem>();
+
             model.MapSegmentsSelectListItems = (await _bll.MapSegments.AllAsync()).Select(
                 mapSegment => new SelectListItem()
                 {
-                    Selected = mapSegment.Id == animal.MapSegment.Id,
+                    Selected = animal.MapSegment != null ? mapSegment.Id == animal.MapSegment.Id : false,
                     Value = mapSegment.Id.ToString(),
                     Text = mapSegment.Name
                 }
@@ -111,18 +115,15 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var animal = new Animal()
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    BinomialName = model.BinomialName
-                };
+                var animal = new Animal();
+                animal.Name = new MultiLangString(model.Name);
+                animal.Description = new MultiLangString("");
+                animal.Created = DateTime.Now;
 
                 await _bll.Animals.AddAsync(animal);
                 await _bll.SaveChangesAsync();
 
-
-                return RedirectToAction(nameof(AnimalAdded));
+                return RedirectToAction(nameof(Details), new {id = animal.Id});
             }
 
             return View(nameof(Add));
@@ -141,10 +142,38 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            //TODO fix seeding so that cascade deleting works
+            var animal = await _bll.Animals.FindAsync(id);
+            if (animal.MapSegment.Id != null)
+            {
+                var mapSegment = await _bll.MapSegments.FindAsync(animal.MapSegment.Id);
+                mapSegment.AnimalId = null;
+                _bll.MapSegments.Update(mapSegment);
+                await _bll.SaveChangesAsync();
+            }
+
             _bll.Animals.Remove(id);
             await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(AnimalDeleted));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImageFromAnimal(Guid? id)
+        {
+            var animal = await _bll.Animals.FindAsync(id);
+
+            if (animal == null)
+            {
+                return NotFound();
+            }
+
+            animal.FeaturedImgId = null;
+
+            _bll.Animals.Update(animal);
+            await _bll.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new {id = animal.Id});
         }
 
         [Route("animal-deleted")]
@@ -152,7 +181,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Update(AnimalModel model)
         {
@@ -163,29 +192,24 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            animal.Name.SetTranslation(model.Name);
+            animal.Description.SetTranslation(model.Description);
+            animal.BinomialName = model.BinomialName;
+            animal.ConservationStatusId = model.ConservationStatusId;
+
+            animal.BinomialName = model.BinomialName;
+
+            var mapSegment = await _bll.MapSegments.FindAsync(model.MapSegment.Id);
+
+            if (mapSegment != null)
             {
-                animal.Name = model.Name;
-                animal.Description = model.Description;
-                animal.BinomialName = model.BinomialName;
-                animal.ConservationStatusId = model.ConservationStatusId;
-
-                animal.Name = model.Name;
-                animal.Description = model.Description;
-                animal.BinomialName = model.BinomialName;
-
-                var mapSegment = await _bll.MapSegments.FindAsync(model.MapSegment.Id);
-
-                if (mapSegment != null)
-                {
-                    //animal.MapSegment = mapSegment;
-                    mapSegment.Animal = animal;
-                }
-
+                //animal.MapSegment = mapSegment;
+                mapSegment.Animal = animal;
                 _bll.MapSegments.Update(mapSegment);
-                //_bll.Animals.Update(animal);
-                await _bll.SaveChangesAsync();
             }
+
+            _bll.Animals.Update(animal);
+            await _bll.SaveChangesAsync();
 
             return RedirectToAction(nameof(Details), new {id = model.Id});
         }

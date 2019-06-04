@@ -8,14 +8,14 @@ ViewData["Title"] = "Asukoht kaardil";
     <section class="row">
         <div class="col-md-8">
             <h5 class="heading">
-                Koordinaat @Model.MapSegmentName
+                @Texts.Coordinates @Model.MapSegmentName
             </h5>
         </div>
         <div class="col-md-4 text-left text-lg-right">
             <form asp-action="GeoCoordinateDelete">
                 <input asp-for="Id" type="hidden">
                 <button class="btn btn-action" type="submit">
-                    Kustuta koordinaat<i class="far fa-trash-alt ml-2"></i>
+                    @Texts.CoordinateDelete<i class="far fa-trash-alt ml-2"></i>
                 </button>
             </form>
         </div>
@@ -26,25 +26,25 @@ ViewData["Title"] = "Asukoht kaardil";
     <form asp-action="GeoCoordinateAdd" method="post">
         <input asp-for="MapSegmentId" type="hidden">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 order-lg-1 order-2">
                 <div class="card-white-round p-3 mt-4">
                     <div class="row">
                         <div class="col-md-6">
-                            <label asp-for="@Model.Longitude" class="input-label">Pikkuskraad</label>
+                            <label asp-for="@Model.Longitude" class="input-label">@Texts.Latitude</label>
                             <input asp-for="@Model.Longitude" class="form-control" v-model="userCurrentLocation.lng">
                         </div>
                         <div class="col-md-6">
-                            <label asp-for="@Model.Latitude" class="input-label">Laiuskraad</label>
+                            <label asp-for="@Model.Latitude" class="input-label">@Texts.Longitude</label>
                             <input asp-for="@Model.Latitude" class="form-control" v-model="userCurrentLocation.lat">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 order-lg-2 order-1">
                 <div class="card-white card-white-round mt-4 p-3">
-                    <button class="btn btn-secondary btn-block mt-4" type="button" v-on:click="watchLocation">Tuvasta koordinaadid</button>
+                    <button class="btn btn-secondary btn-block mt-4" type="button" v-on:click="watchLocation">@Texts.DetectCoorinates</button>
                     <div class="divider-brown-light my-4"></div>
-                    <button class="btn btn-primary btn-block mt-4" type="submit">Salvesta</button>
+                    <button class="btn btn-primary btn-block mt-4" type="submit">@Texts.Save</button>
                 </div>
             </div>
         </div>

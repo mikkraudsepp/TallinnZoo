@@ -5,10 +5,10 @@ namespace WebApp.Areas.Admin.ViewModels.Animal
 {
     public class IndexModel
     {
-        public IEnumerable<AnimalListModel> Animals { get; set; } = new List<AnimalListModel>();
+        public IEnumerable<AnimalItemModel> Animals { get; set; } = new List<AnimalItemModel>();
     }
 
-    public class AnimalListModel
+    public class AnimalItemModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

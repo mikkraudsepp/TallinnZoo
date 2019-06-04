@@ -6,6 +6,10 @@
 .sidemenu {
     padding-top: 5rem;
 
+    @include media-breakpoint-down(lg) {
+        padding-top: 0;
+    }
+
     .menu-item {
 
         a {
@@ -37,9 +41,7 @@
 .animal-details-page {
 
     .animal-description {
-
+        min-height: 10rem;
     }
-
-
 
 }

@@ -41,7 +41,7 @@
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1000px;
-  --breakpoint-xl: 1400px;
+  --breakpoint-xl: 1600px;
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, ("Roboto", sans-serif), "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
@@ -470,9 +470,9 @@ pre {
   @media (min-width: 1000px) {
     .container {
       max-width: 960px; } }
-  @media (min-width: 1400px) {
+  @media (min-width: 1600px) {
     .container {
-      max-width: 1330px; } }
+      max-width: 1530px; } }
 
 .container-fluid {
   width: 100%;
@@ -942,7 +942,7 @@ pre {
   .offset-lg-11 {
     margin-left: 91.66667%; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .col-xl {
     flex-basis: 0;
     flex-grow: 1;
@@ -1282,7 +1282,7 @@ pre {
     .table-responsive-lg > .table-bordered {
       border: 0; } }
 
-@media (max-width: 1399.98px) {
+@media (max-width: 1599.98px) {
   .table-responsive-xl {
     display: block;
     width: 100%;
@@ -2202,7 +2202,7 @@ input[type="button"].btn-block {
     right: 0;
     left: auto; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .dropdown-menu-xl-left {
     right: auto;
     left: 0; }
@@ -3105,13 +3105,13 @@ input[type="button"].btn-block {
     .navbar-expand-lg .navbar-toggler {
       display: none; } }
 
-@media (max-width: 1399.98px) {
+@media (max-width: 1599.98px) {
   .navbar-expand-xl > .container,
   .navbar-expand-xl > .container-fluid {
     padding-right: 0;
     padding-left: 0; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .navbar-expand-xl {
     flex-flow: row nowrap;
     justify-content: flex-start; }
@@ -3866,7 +3866,7 @@ input[type="button"].btn-block {
         border-bottom-right-radius: 0.25rem;
         border-bottom-left-radius: 0; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .list-group-horizontal-xl {
     flex-direction: row; }
     .list-group-horizontal-xl .list-group-item {
@@ -4193,7 +4193,7 @@ a.close.disabled {
   .modal-xl {
     max-width: 800px; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .modal-xl {
     max-width: 1140px; } }
 
@@ -4884,7 +4884,7 @@ button.bg-dark:focus {
   .d-lg-inline-flex {
     display: inline-flex !important; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .d-xl-none {
     display: none !important; }
   .d-xl-inline {
@@ -5270,7 +5270,7 @@ button.bg-dark:focus {
   .align-self-lg-stretch {
     align-self: stretch !important; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .flex-xl-row {
     flex-direction: row !important; }
   .flex-xl-column {
@@ -5373,7 +5373,7 @@ button.bg-dark:focus {
   .float-lg-none {
     float: none !important; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .float-xl-left {
     float: left !important; }
   .float-xl-right {
@@ -7166,7 +7166,7 @@ button.bg-dark:focus {
   .mx-lg-auto {
     margin-left: auto !important; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .m-xl-0 {
     margin: 0 !important; }
   .mt-xl-0,
@@ -7596,7 +7596,7 @@ button.bg-dark:focus {
   .text-lg-center {
     text-align: center !important; } }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .text-xl-left {
     text-align: left !important; }
   .text-xl-right {
@@ -7778,6 +7778,9 @@ a.text-dark:hover, a.text-dark:focus {
 /*********** SIDEMENU **********/
 .sidemenu {
   padding-top: 5rem; }
+  @media (max-width: 1599.98px) {
+    .sidemenu {
+      padding-top: 0; } }
   .sidemenu .menu-item a {
     font-weight: 700;
     padding: 1rem 1rem;
@@ -7794,6 +7797,9 @@ a.text-dark:hover, a.text-dark:focus {
       .sidemenu .menu-item a .menu-item-ico i {
         font-size: 1.3rem;
         max-width: 1.5rem; }
+
+.animal-details-page .animal-description {
+  min-height: 10rem; }
 
 .mobile-nav {
   background: #FFFFFF;
@@ -8002,7 +8008,8 @@ html {
   scroll-behavior: smooth; }
 
 .page {
-  min-height: 94vh; }
+  min-height: 94vh;
+  padding-bottom: 5rem; }
 
 .page-top-padding {
   padding-top: 2.625rem; }
@@ -8027,18 +8034,19 @@ html {
   width: 100%;
   margin-left: auto;
   margin-right: auto; }
-  @media (min-width: 1400px) {
+  @media (min-width: 1600px) {
     .container-max {
-      max-width: 1300px;
-      width: 1300px; } }
+      max-width: 1500px;
+      width: 1500px; } }
 
 .col-sidemenu {
   padding-bottom: 2rem;
   position: relative;
   width: 100%;
   padding-right: 15px;
-  padding-left: 15px; }
-  @media (min-width: 1000px) {
+  padding-left: 15px;
+  padding-bottom: 0; }
+  @media (min-width: 1600px) {
     .col-sidemenu {
       flex: 0 0 25%;
       max-width: 25%; } }
@@ -8051,7 +8059,7 @@ html {
   min-height: 85vh;
   padding-bottom: 5rem;
   margin-top: 3rem; }
-  @media (min-width: 1000px) {
+  @media (min-width: 1600px) {
     .col-content {
       flex: 0 0 75%;
       max-width: 75%;
@@ -8167,6 +8175,26 @@ a.card-white:hover {
   .navbar-app .navbar {
     padding: 0.5rem 0; }
 
+.modal.modal-left-pane.show .modal-dialog {
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0); }
+
+.modal.modal-left-pane .modal-dialog {
+  -webkit-transform: translate(-100%, 0);
+          transform: translate(-100%, 0);
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 80%;
+  height: 100%; }
+  .modal.modal-left-pane .modal-dialog .modal-content {
+    border-radius: 0;
+    border: none;
+    height: 100%;
+    overflow-y: auto; }
+    .modal.modal-left-pane .modal-dialog .modal-content .modal-header {
+      padding: 0.5rem 1rem; }
+
 /*********** FOOTER **********/
 /*********** NAVS **********/
 .nav-tabs .nav-link {
@@ -8192,6 +8220,21 @@ a.card-white:hover {
     width: 100%;
     max-width: 1.5rem;
     color: #D7B085; }
+
+.images-list .list-card-img {
+  width: 100%;
+  height: 9rem;
+  -o-object-fit: cover;
+     object-fit: cover; }
+
+.animal-details-page .details-img {
+  width: 100%;
+  max-height: 14rem;
+  -o-object-fit: cover;
+     object-fit: cover; }
+  .animal-details-page .details-img:hover {
+    cursor: pointer;
+    opacity: 0.8; }
 
 
 /*# sourceMappingURL=main.css.map*/

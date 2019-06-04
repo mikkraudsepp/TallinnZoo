@@ -7,26 +7,26 @@ ViewData["Title"] = "Stats";
     <div class="container">
         <div class="row justify-content-center py-4">
             <div class="col-lg-3">
-                <span class="font-weight-medium">Keskmine:</span> {{ meanDistance }}
+                <span class="font-weight-medium">@Texts.StatsMean :</span> {{ meanDistance }}
             </div>
             <div class="col-lg-3">
                 <div>
-                    <span class="font-weight-medium">Punktide arv:</span> {{ animalList.length }}
+                    <span class="font-weight-medium">@Texts.StatsPoints :</span> {{ animalList.length }}
                 </div>
                 <div>
-                    <span class="font-weight-medium">Aega jäänud:</span> {{ message2 }}
+                    <span class="font-weight-medium">@Texts.StatsTimeLeft:</span> {{ message2 }}
                 </div>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-3">
                 <button class="btn btn-primary btn-block" v-on:click="runForTime">
-                    Start watch
+                    @Texts.StatsStartWatch
                 </button>
             </div>
             <div class="col-lg-3 mt-3 mt-lg-0">
                 <div class="btn btn-primary btn-block" v-on:click="stopLocationWatch">
-                    Close watch
+                    @Texts.StatsCloseWatch
                 </div>
             </div>
         </div>

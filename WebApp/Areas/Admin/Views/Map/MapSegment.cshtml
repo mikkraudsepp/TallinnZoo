@@ -15,7 +15,7 @@ ViewData["Title"] = "Asukoht kaardil";
             <form asp-action="Delete">
                 <input asp-for="Id" type="hidden">
                 <button class="btn btn-action" type="submit">
-                    Kustuta segment<i class="far fa-trash-alt ml-2"></i>
+                    @Texts.SegmentDelete<i class="far fa-trash-alt ml-2"></i>
                 </button>
             </form>
         </div>
@@ -23,10 +23,10 @@ ViewData["Title"] = "Asukoht kaardil";
 
     <div class="heading-divider"></div>
     
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-12 text-right mt-3">
-            <a asp-area="Admin" asp-controller="Map" asp-action="GeoCoordinate" asp-route-mapSegmentId="@Model.Id" class="btn btn-success">
-                Lisa koordinaat
+            <a asp-area="Admin" asp-controller="Map" asp-action="GeoCoordinate" asp-route-mapSegmentId="@Model.Id" class="btn btn-success btn-block">
+                @Texts.CoordinateAdd
                 <i class="fas fa-plus white ml-2"></i>
             </a>
         </div>
@@ -37,11 +37,11 @@ ViewData["Title"] = "Asukoht kaardil";
         <div class="card-white-round p-3 mt-4">
             <div class="row">
                 <div class="col-md-4">
-                    <label asp-for="@geoCoordinate.Longitude" class="input-label">Pikkuskraad</label>
+                    <label asp-for="@geoCoordinate.Longitude" class="input-label">@Texts.Latitude</label>
                     <input asp-for="@geoCoordinate.Longitude" class="form-control">
                 </div>
-                <div class="col-md-4">
-                    <label asp-for="@geoCoordinate.Latitude" class="input-label">Laiuskraad</label>
+                <div class="col-md-4 mt-3 mt-lg-0">
+                    <label asp-for="@geoCoordinate.Latitude" class="input-label">@Texts.Longitude</label>
                     <input asp-for="@geoCoordinate.Latitude" class="form-control">
                 </div>
                 <div class="col-md-4">
@@ -49,7 +49,7 @@ ViewData["Title"] = "Asukoht kaardil";
                         <form asp-area="Admin" asp-controller="Map" asp-action="GeoCoordinateDelete" method="post">
                             <input value="@geoCoordinate.Id" name="id" type="hidden">
                             <button class="btn btn-secondary mt-4" type="submit">
-                                Eemalda<i class="fas fa-times ml-2 gray"></i>
+                                @Texts.Remove<i class="fas fa-times ml-2 gray"></i>
                             </button>
                         </form>
                     </div>

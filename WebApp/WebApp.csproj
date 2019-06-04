@@ -24,7 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Admin\Views\Media" />
       <Folder Include="Data" />
       <Folder Include="wwwroot\media\brand" />
     </ItemGroup>
@@ -33,6 +32,7 @@
       <ProjectReference Include="..\BLL.App\BLL.App.csproj" />
       <ProjectReference Include="..\Contracts.BLL.App\Contracts.BLL.App.csproj" />
       <ProjectReference Include="..\DAL.App.EF\DAL.App.EF.csproj" />
+      <ProjectReference Include="..\Resources\Resources.csproj" />
     </ItemGroup>
 
     <ItemGroup>

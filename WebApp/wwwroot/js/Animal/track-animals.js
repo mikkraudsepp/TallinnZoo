@@ -60,6 +60,14 @@ var vm = new Vue({
       var d = R * c;
       return d; // returns the distance in meter
     },
+    getDistancePythagoras: function (p1, p2) {
+        var R = 6378137; // Earth’s mean radius in meter
+
+        var dx = this.getRad(p2.lng - p1.lng) * Math.cos((p1.lat + p2.lat) / 2);
+        var dy = this.getRad(p1.lat - p2.lat);
+
+        return Math.sqrt(dx * dx + dy * dy) * R; // returns the distance in meter
+    },
     getLocalDistance: function() {
       this.distance = this.getDistance(this.animalLocation, this.userCurrentLocation);
     },
@@ -80,7 +88,7 @@ var vm = new Vue({
         var start = new Date();
         this.calculationCycles = 0;
         
-        //for(var j=0; j < 20000; j++) {
+        //for(var j=0; j < 1000; j++) {
           for(var i=0; i < this.animalList.length; i++) {
             
             var curDistanceFromPoint = [];
@@ -92,11 +100,13 @@ var vm = new Vue({
                 lng: this.animalList[i].MapSegment.GeoCoordinates[k].Longitude
               };
 
-              curDistanceFromPoint.push(this.getDistance(this.userCurrentLocation, animalLocation).toFixed(3));
+                //curDistanceFromPoint.push(distVincenty(this.userCurrentLocation.lat, this.userCurrentLocation.lng, animalLocation.lat, animalLocation.lng).toFixed(3));
+                curDistanceFromPoint.push(this.getDistance(this.userCurrentLocation, animalLocation).toFixed(3));
+
             }
             console.log(curDistanceFromPoint);
 
-            this.animalList[i].DistanceFromUser = Math.min.apply( Math, curDistanceFromPoint );
+            this.animalList[i].DistanceFromUser = Math.min.apply(Math, curDistanceFromPoint );
 
             //this.animalList[i].DistanceFromUser = google.maps.geometry.spherical.computeDistanceBetween (new google.maps.LatLng(this.userCurrentLocation.lat, this.userCurrentLocation.lng), new google.maps.LatLng(animalLocation.lat, animalLocation.lng));
             //this.calculationCycles += 1;

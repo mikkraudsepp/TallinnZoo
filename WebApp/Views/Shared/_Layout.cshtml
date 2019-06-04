@@ -18,11 +18,11 @@
     <header>
         <div class="container-fluid">
             <div class="container-max">
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-white">
+                <nav class="navbar navbar-expand-lg navbar-toggleable-lg bg-white">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Tallinn<span
                             class="brown-dark">Zoo</span></a>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
+                    <div class="navbar-collapse collapse d-lg-inline-flex flex-lg-row-reverse">
+                        @*<partial name="_LoginPartial" />*@
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Animal" asp-action="Index">Animals</a>
@@ -35,10 +35,15 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Admin" asp-controller="Home"
-                                    asp-action="Index">Admin</a>
+                                   asp-action="Index">Admin</a>
                             </li>
                         </ul>
                     </div>
+                    @*
+                        <div class="navbar-collapse collapse d-xl-inline-flex flex-xl-row-reverse">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Feedback" asp-action="Feedback">Feedback</a>
+                        </div>
+                    *@
                 </nav>
             </div>
         </div>

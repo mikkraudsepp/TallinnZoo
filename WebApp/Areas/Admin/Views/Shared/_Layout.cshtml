@@ -1,99 +1,178 @@
-﻿<!DOCTYPE html>
+﻿@using System.Globalization
+@using System.Net.Mime
+@using System.Threading
+<!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TallinnZoo</title>
-
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="/dist/main.css" asp-append-version="true" />
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
-
 <body>
     <header>
         <div class="container-fluid">
             <div class="container-max">
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-white">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Tallinn<span
-                            class="brown-dark">Zoo</span></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                <nav class="navbar navbar-expand-xl navbar-toggleable-xl bg-white">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        Tallinn<span class="brown-dark">Zoo</span>
+                    </a>
+                    <button type="button" class="btn btn-link d-block d-xl-none" data-toggle="modal" data-target="#sidemenuModal">
+                        <span class="mr-2 font-weight-medium">Menüü</span>
+                        <i class="fas fa-bars font-size-1-25"></i>
                     </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
+                    <div class="navbar-collapse collapse d-xl-inline-flex flex-xl-row-reverse">
+                        <partial name="_LoginPartial"/>
+                        @await Html.PartialAsync("_LanguagePartial.cshtml")
                     </div>
                 </nav>
             </div>
         </div>
     </header>
-
     <partial name="_CookieConsentPartial" />
-
     <main class="bg-brown-light container-fluid">
         <div class="row">
             <div class="col-xl bg-white"></div>
             <div class="col">
                 <div class="container-max">
-                    <div class="row w-100">
+                    <div class="row">
                         <nav class="col-sidemenu sidemenu bg-white">
-                            <div class="menu-item">
-                                <a asp-area="Admin" asp-controller="Animal" asp-action="Index">
-                                    <div class="menu-item-ico">
-                                        <i class="fas fa-hippo ico-border"></i>
-                                        <i class="fas fa-hippo"></i>
+                            @* TODO remove menu duplication *@
+                            <div class="modal fade modal-left-pane" id="sidemenuModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="nav-side">
+                                                <div class="menu-item">
+                                                    <a asp-area="Admin" asp-controller="Animal" asp-action="Index">
+                                                        <div class="menu-item-ico">
+                                                            <i class="fas fa-hippo ico-border"></i>
+                                                            <i class="fas fa-hippo"></i>
+                                                        </div>
+                                                        @Texts.MenuAnimals
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <a asp-area="Admin" asp-controller="Image" asp-action="Index">
+                                                        <div class="menu-item-ico">
+                                                            <i class="fas fa-images ico-border"></i>
+                                                            <i class="fas fa-images"></i>
+                                                        </div>
+                                                        @Texts.MenuImages
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <a asp-area="Admin" asp-controller="SoundTrack" asp-action="Index">
+                                                        <div class="menu-item-ico">
+                                                            <i class="fas fa-headphones-alt ico-border"></i>
+                                                            <i class="fas fa-headphones-alt"></i>
+                                                        </div>
+                                                        @Texts.MenuSoundTracks
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <a asp-area="Admin" asp-controller="Map" asp-action="MapSegments">
+                                                        <div class="menu-item-ico">
+                                                            <i class="fas fa-map-marker-alt ico-border"></i>
+                                                            <i class="fas fa-map-marker-alt"></i>
+                                                        </div>
+                                                        @Texts.MenuLocationsOnMap
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <a href="">
+                                                        <div class="menu-item-ico">
+                                                            <i class="fas fa-users ico-border"></i>
+                                                            <i class="fas fa-users"></i>
+                                                        </div>
+                                                        @Texts.MenuUsers
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item">
+                                                    <a href="">
+                                                        <div class="menu-item-ico">
+                                                            <i class="fas fa-comment-alt ico-border"></i>
+                                                            <i class="fas fa-comment-alt"></i>
+                                                        </div>
+                                                        @Texts.MenuFeedback
+                                                    </a>
+                                                </div>
+                                                <div class="menu-item mt-5 ml-3">
+                                                    <div class="font-weight-semibold">
+                                                        Language
+                                                    </div>
+                                                    <div class="heading-divider my-3"></div>
+                                                    @await Html.PartialAsync("_LanguagePartial.cshtml")
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    Loomad
-                                </a>
+                                </div>
                             </div>
-                            <div class="menu-item">
-                                <a href="">
-                                    <div class="menu-item-ico">
-                                        <i class="fas fa-images ico-border"></i>
-                                        <i class="fas fa-images"></i>
-                                    </div>
-                                    Pildid
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a href="">
-                                    <div class="menu-item-ico">
-                                        <i class="fas fa-headphones-alt ico-border"></i>
-                                        <i class="fas fa-headphones-alt"></i>
-                                    </div>
-                                    Heliklipid
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a asp-area="Admin" asp-controller="Map" asp-action="MapSegments">
-                                    <div class="menu-item-ico">
-                                        <i class="fas fa-map-marker-alt ico-border"></i>
-                                        <i class="fas fa-map-marker-alt"></i>
-                                    </div>
-                                    Asukohad kaardil
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a href="">
-                                    <div class="menu-item-ico">
-                                        <i class="fas fa-users ico-border"></i>
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                    Kasutajad
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a href="">
-                                    <div class="menu-item-ico">
-                                        <i class="fas fa-comment-alt ico-border"></i>
-                                        <i class="fas fa-comment-alt"></i>
-                                    </div>
-                                    Tagasiside
-                                </a>
+                            <div class="d-none d-xl-block">
+                                <div class="menu-item">
+                                    <a asp-area="Admin" asp-controller="Animal" asp-action="Index">
+                                        <div class="menu-item-ico">
+                                            <i class="fas fa-hippo ico-border"></i>
+                                            <i class="fas fa-hippo"></i>
+                                        </div>
+                                        @Texts.MenuAnimals
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a asp-area="Admin" asp-controller="Image" asp-action="Index">
+                                        <div class="menu-item-ico">
+                                            <i class="fas fa-images ico-border"></i>
+                                            <i class="fas fa-images"></i>
+                                        </div>
+                                        @Texts.MenuImages
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a asp-area="Admin" asp-controller="SoundTrack" asp-action="Index">
+                                        <div class="menu-item-ico">
+                                            <i class="fas fa-headphones-alt ico-border"></i>
+                                            <i class="fas fa-headphones-alt"></i>
+                                        </div>
+                                        @Texts.MenuSoundTracks
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a asp-area="Admin" asp-controller="Map" asp-action="MapSegments">
+                                        <div class="menu-item-ico">
+                                            <i class="fas fa-map-marker-alt ico-border"></i>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        @Texts.MenuLocationsOnMap
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="">
+                                        <div class="menu-item-ico">
+                                            <i class="fas fa-users ico-border"></i>
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        @Texts.MenuUsers
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a href="">
+                                        <div class="menu-item-ico">
+                                            <i class="fas fa-comment-alt ico-border"></i>
+                                            <i class="fas fa-comment-alt"></i>
+                                        </div>
+                                        @Texts.MenuFeedback
+                                    </a>
+                                </div>
                             </div>
                         </nav>
                         <div class="col-content">
@@ -105,26 +184,20 @@
             <div class="col-xl bg-brown-light"></div>
         </div>
     </main>
-
-    <footer class="footer text-muted">
+    <footer class="footer text-muted py-4">
         <div class="container-max text-center">
-            <div class="text-center w-100">&copy; @DateTime.Now.Year - TallinnZoo</div>
         </div>
     </footer>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-
     <script src="wwwroot/dist/main.js"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
-
 </html>

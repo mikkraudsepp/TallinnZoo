@@ -1,7 +1,7 @@
 @model WebApp.Areas.Admin.ViewModels.Map.MapSegment.MapSegmentModel
 
 @{
-    ViewData["Title"] = "Add animal";
+    ViewData["Title"] = "Add map segment";
 }
 
 <div class="add-animal-page page" id="add-animal-page">
@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-6">
                 <h4 class="heading heading-line mt-4">
-                    Add map segment
+                    @Texts.MapSegmentAdd
                 </h4>
                 <form asp-area="Admin" asp-controller="Map" asp-action="MapSegmentAdd" method="post" class="mt-4">
                     <div class="form-group">
@@ -17,7 +17,7 @@
                         <input class="form-control" placeholder="" asp-for="Name" minlength="2"/>
                         <span asp-validation-for="Name" class="invalid-feedback"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block mt-5">Add map segment<i class="far fa-paper-plane ml-3"></i></button>
+                    <button type="submit" class="btn btn-primary btn-block mt-5">@Texts.MapSegmentAdd<i class="far fa-paper-plane ml-3"></i></button>
                 </form>
             </div>
         </div>

@@ -2,11 +2,11 @@
     ViewData["Title"] = "Animal deleted";
 }
 
-<div class="animal-added-page page" id="animal-added-page">
+<div class="animal-deleted-page page" id="animal-deleted-page">
     <div class="container">
         <div class="row">
             <div class="col-12 mt-5 mb-4">
-                <a asp-controller="Animal" asp-action="Index"><i class="fas fa-angle-left mr-2"></i>Back to Animal Overview</a>
+                <a asp-controller="Animal" asp-action="Index"><i class="fas fa-angle-left mr-2"></i>@Texts.BackToAnimalOverview</a>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -14,10 +14,10 @@
                 <i class="fas fa-check-circle green-success fa-3x"></i>
                 <div class="mt-4">
                     <div class="heading-2">
-                        Animal deleted
+                        @Texts.AnimalDeleted
                     </div>
                     <div class="alert alert-success mt-4 text-left" role="alert">
-                        <div class="text-center">Animal deleted!</div>
+                        <div class="text-center">@Texts.AnimalDeleted!</div>
                     </div>
                 </div>
             </div>

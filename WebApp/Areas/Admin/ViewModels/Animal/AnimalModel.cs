@@ -17,8 +17,8 @@ namespace WebApp.Areas.Admin.ViewModels.Animal
         public virtual ImageModel FeaturedImage { get; set; }
         public ConservationStatusModel ConservationStatus { get; set; }
         public Guid? ConservationStatusId { get; set; }
-        public IList<SelectListItem> ConservationStatuses { get; set; }
-        public IList<SelectListItem> MapSegmentsSelectListItems { get; set; }
+        public IList<SelectListItem> ConservationStatuses { get; set; } = new List<SelectListItem>();
+        public IList<SelectListItem> MapSegmentsSelectListItems { get; set; } = new List<SelectListItem>();
     }
     
     public class MapSegmentModel

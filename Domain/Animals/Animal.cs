@@ -16,16 +16,16 @@ namespace Domain.Animals
             Created = DateTime.Now;
         }
         
+        public Guid NameId { get; set; }
         [Required]
-        [MaxLength(80)]
-        [MinLength(3)]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        [MaxLength(80)]
-        [MinLength(3)]
+        [MaxLength(80, ErrorMessageResourceName="ErrorMaxLength", ErrorMessageResourceType = typeof(Resources.Texts))]
+        [MinLength(3, ErrorMessageResourceName="ErrorMinLength", ErrorMessageResourceType = typeof(Resources.Texts))]
+        public virtual MultiLangString Name { get; set; }
+        public Guid? DescriptionId { get; set; }
+        public virtual MultiLangString Description { get; set; }
         public string BinomialName { get; set; }
         public DateTime LastEdited { get; set; }
-        public DateTime Created { get; private set; }
+        public DateTime Created { get; set; }
 
         public Guid? MapSegmentId { get; set; }
         public virtual MapSegment MapSegment { get; set; }

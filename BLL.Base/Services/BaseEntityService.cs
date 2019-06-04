@@ -34,7 +34,7 @@ namespace BLL.Base.Services
             _repository.Remove(id);
         }
 
-        public async Task<IEnumerable<TEntity>> AllAsync()
+        public async Task<IList<TEntity>> AllAsync()
         {
             return await _repository.AllAsync();
         }
