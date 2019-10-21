@@ -17,15 +17,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.App.EF", "DAL.App.EF\DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.Base.EF", "DAL.Base.EF\DAL.Base.EF.csproj", "{9C818C50-95DA-4BB2-BC84-E029EE957CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.App", "BLL.App\BLL.App.csproj", "{F5626C55-C170-4305-A6C9-C816F71F4276}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.App", "BLL.App\BLL.App.csproj", "{F5626C55-C170-4305-A6C9-C816F71F4276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Base", "BLL.Base\BLL.Base.csproj", "{29BD4EC7-E912-4F4F-A713-75601E450BEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Base", "BLL.Base\BLL.Base.csproj", "{29BD4EC7-E912-4F4F-A713-75601E450BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts.BLL.App", "Contracts.BLL.App\Contracts.BLL.App.csproj", "{7C84B1EC-27FF-46D5-9666-34ADFAF8F558}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts.BLL.App", "Contracts.BLL.App\Contracts.BLL.App.csproj", "{7C84B1EC-27FF-46D5-9666-34ADFAF8F558}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts.BLL.Base", "Contracts.BLL.Base\Contracts.BLL.Base.csproj", "{084468CB-1E00-4504-9F72-DB3EE2FA52D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts.BLL.Base", "Contracts.BLL.Base\Contracts.BLL.Base.csproj", "{084468CB-1E00-4504-9F72-DB3EE2FA52D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{E713DF9C-B2B6-4D78-B12A-AC43CAB1D127}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resources", "Resources\Resources.csproj", "{E713DF9C-B2B6-4D78-B12A-AC43CAB1D127}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{002EDB86-1E9D-4364-A6FF-ADA420158C4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{91520113-FD6F-4D3D-BA55-D098B21C7DEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Tests", "Web.Tests\Web.Tests.csproj", "{846573BA-FAAC-42BC-9EEF-44114853F862}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,9 +83,21 @@ Global
 		{E713DF9C-B2B6-4D78-B12A-AC43CAB1D127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E713DF9C-B2B6-4D78-B12A-AC43CAB1D127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E713DF9C-B2B6-4D78-B12A-AC43CAB1D127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91520113-FD6F-4D3D-BA55-D098B21C7DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91520113-FD6F-4D3D-BA55-D098B21C7DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91520113-FD6F-4D3D-BA55-D098B21C7DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91520113-FD6F-4D3D-BA55-D098B21C7DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846573BA-FAAC-42BC-9EEF-44114853F862}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846573BA-FAAC-42BC-9EEF-44114853F862}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846573BA-FAAC-42BC-9EEF-44114853F862}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846573BA-FAAC-42BC-9EEF-44114853F862}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{91520113-FD6F-4D3D-BA55-D098B21C7DEE} = {002EDB86-1E9D-4364-A6FF-ADA420158C4F}
+		{846573BA-FAAC-42BC-9EEF-44114853F862} = {002EDB86-1E9D-4364-A6FF-ADA420158C4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00B73FF6-99D0-483D-A254-1A88E1FD673D}
